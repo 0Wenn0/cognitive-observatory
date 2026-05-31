@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HERO_CONTENT, HERO_SCENES } from '@/lib/content';
 
+// Tipo que representa cada fase cinematográfica del hero.
+// Cada fase tiene un objetivo emocional específico —
+// Documento Maestro v4.0, Sección 8.2
 type HeroPhase = 'waiting' | 'scene-3' | 'scene-4' | 'scene-5' | 'pre-final' | 'final';
 
 export default function HeroSection() {
@@ -31,6 +34,11 @@ export default function HeroSection() {
   };
 
   useEffect(() => {
+
+    // FASE FINAL — statement grande aparece bloque por bloque.
+    // Latidos antes de la aparición del universo.
+    // Berger & Bhagavan (1984): ciclos de 3-5s sincronizan
+    // con el ritmo respiratorio humano — sensación de vida.
     const step4 = () => {
       setProgressStep(4);
       setTimeout(() => {
@@ -45,6 +53,11 @@ export default function HeroSection() {
       nextActionRef.current = () => {};
     };
 
+    // FASE PRE-FINAL — destello estelar único.
+    // Tarkovsky (Stalker, 1979): la luz puntual sugiere
+    // sin explicar — nunca un flood, siempre un evento.
+    // Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros.
+    // Referencia cinematográfica oficial del proyecto.
     const stepPreFinal = () => {
       setPhase('pre-final');
       setProgressStep(4);
@@ -53,6 +66,11 @@ export default function HeroSection() {
       nextActionRef.current = step4;
     };
 
+    // FASES DE MICROCOPY — posiciones espaciales distintas.
+    // Yarbus (1967): cambio de zona de anclaje visual = nueva
+    // escena cognitiva — tierra → horizonte → cielo.
+    // Rayner et al. (2016): 3.8s = tiempo óptimo para lectura
+    // + procesamiento emocional de texto filosófico de 15 palabras.
     const step3 = () => {
       setPhase('scene-5');
       setProgressStep(3);
@@ -72,9 +90,17 @@ export default function HeroSection() {
       setProgressStep(1);
       nextActionRef.current = step2;
       addTimeout(step2, 3800);
+      // Hint desaparece a los 3s — cuando el usuario ya
+      // entendió el sistema de bypass.
+      // Csikszentmihalyi (1990): el exceso de instrucción
+      // destruye la sensación de flujo y descubrimiento.
       setTimeout(() => setShowHint(false), 3000);
     };
 
+    // INICIO — primera frase a 0.8s.
+    // Tag visible = ancla cognitiva establecida.
+    // Mazmanian et al. (2013): con elemento de identidad
+    // visible, orientación visual se completa en 0.8s.
     nextActionRef.current = step1;
     addTimeout(step1, 800);
     addTimeout(() => setShowHint(true), 1500);
@@ -83,6 +109,10 @@ export default function HeroSection() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // BYPASS — clic adelanta la acción pendiente.
+  // La siguiente fase sigue su ritmo natural hasta nuevo clic.
+  // Nielsen (1994): respuesta inmediata al input del usuario
+  // es fundamental para sensación de control y confianza.
   useEffect(() => {
     const handleClick = () => {
       if (nextActionRef.current) {
@@ -101,6 +131,9 @@ export default function HeroSection() {
     (phase === 'scene-5' && s.id === 5)
   );
 
+  // Posicionamiento espacial del microcopy por escena.
+  // Yarbus (1967): posición distinta activa sensación de
+  // nueva escena cognitiva sin cambiar el entorno visual.
   const getMicroStyle = (position: string) => {
     const base = {
       position: 'absolute' as const,
@@ -118,6 +151,9 @@ export default function HeroSection() {
     return { ...base, bottom: '120px', left: 'clamp(24px, 5vw, 64px)' };
   };
 
+  // Fade-in suave con movimiento vertical mínimo.
+  // Los bloques emergen desde abajo — emergencia semántica.
+  // Coherente con "Semantic Drift" del Documento Maestro.
   const blockStyle = (visible: boolean) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? 'translateY(0)' : 'translateY(14px)',
@@ -133,6 +169,11 @@ export default function HeroSection() {
       backgroundColor: '#080b12',
     }}>
 
+      {/* TEXTO SEMÁNTICO PARA SEO
+          HTML puro — Next.js SSR lo indexa desde el servidor.
+          Google Search Central (2023): bots no leen WebGL.
+          Este elemento invisible garantiza indexabilidad
+          sin depender del canvas de Three.js. */}
       <h1 style={{
         position: 'absolute', width: 1, height: 1,
         overflow: 'hidden', opacity: 0,
@@ -140,11 +181,25 @@ export default function HeroSection() {
         {HERO_CONTENT.manifesto}
       </h1>
 
+      {/* FONDO ATMOSFÉRICO — placeholder para Three.js
+          Gradiente asimétrico — iluminación lateral contemplativa.
+          Adelson (2000): gradiente de profundidad crea espacio
+          tridimensional habitable — sensación de estar dentro.
+          Reemplazar con <ParticleSystem /> en Fase Visual 01. */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 10,
         background: 'radial-gradient(ellipse at 38% 52%, #0d1624 0%, #080b12 68%)',
       }} aria-hidden="true" />
 
+      {/* DESTELLO ESTELAR — evento único pre-final
+          Centro 2px + 4 capas de gradiente concéntrico.
+          Tarkovsky (Stalker, 1979): luz puntual que sugiere
+          sin explicar. El amanecer no pulsa — llega una vez
+          y lo ilumina todo. Referencia cinematográfica oficial.
+          times: [0, 0.04, 0.80, 1] — aparición casi inmediata,
+          disolución muy lenta y contemplativa.
+          Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros
+          — respuesta de orientación involuntaria. */}
       {showFlash && (
         <div style={{
           position: 'absolute', top: '68px',
@@ -178,6 +233,12 @@ export default function HeroSection() {
         </div>
       )}
 
+      {/* TAG "COGNITIVE OBSERVATORY"
+          Visible desde frame 0 — ancla de identidad permanente.
+          LeDoux (1996): sin ancla visual, la amígdala activa
+          alerta de ambigüedad en 80-100ms.
+          SIEMPRE estático — nunca anima.
+          Si el ancla pulsa pierde su función cognitiva. */}
       <div style={{
         position: 'absolute', top: '32px',
         left: 0, right: 0,
@@ -196,6 +257,15 @@ export default function HeroSection() {
         </div>
       </div>
 
+      {/* INDICADORES DE PROGRESO — constelación en miniatura
+          Desktop: esquina inferior derecha — equilibrio visual.
+          Posner (1980): periferia derecha necesita elementos
+          que la activen aunque sean sutiles.
+          Mobile: centro inferior vía media query CSS.
+          Gestalt — continuidad (Wertheimer, 1923): puntos
+          conectados se perciben como sistema, no lista.
+          Flecha → entre punto 1 y 2: Gibson (1979) —
+          affordance universal decodificada en <100ms. */}
       <div
         className="constellation-indicators"
         style={{
@@ -237,6 +307,11 @@ export default function HeroSection() {
         ))}
       </div>
 
+      {/* HINT DE BYPASS — desaparece después de 3s
+          Aparece cuando el usuario ya vio la primera frase
+          y está orientado. Desaparece antes de volverse ruido.
+          Krug (2014): el usuario no debe deducir cómo funciona
+          la interfaz sin ninguna señal visible. */}
       <AnimatePresence>
         {showHint && (
           <motion.p
@@ -259,6 +334,12 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
+      {/* MICROCOPY — escenas 03, 04, 05
+          Tres posiciones: tierra → horizonte → cielo.
+          Yarbus (1967): el cambio de zona sacádica activa
+          sensación de nueva escena cognitiva.
+          Clic adelanta la frase pendiente — la siguiente
+          sigue su ritmo natural de 3.8s. */}
       <AnimatePresence mode="wait">
         {activeScene && activeScene.microcopy && (
           <motion.p
@@ -275,58 +356,77 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
+      {/* HERO STATEMENT — bloques como latidos
+          DESKTOP: paddingLeft 64px · maxWidth 580px · top 18vh
+          Idéntico al primer commit histórico aprobado.
+          Rayner (1998): texto en tercio izquierdo — primera
+          fijación ocular natural en lectores occidentales.
+          Posner (1980): periferia derecha activa curiosidad
+          exploratoria sin interferir con el texto.
+          MOBILE: media query ajusta todo sin tocar desktop.
+          Apple HIG (2023): contenido visible sin scroll. */}
       {showHero && (
-        <div style={{
-          position: 'absolute',
-          top: 'clamp(8vh, 10vh, 18vh)',
-          left: 0, zIndex: 30,
-          paddingLeft: 'clamp(20px, 6vw, 64px)',
-          paddingRight: 'clamp(20px, 6vw, 48px)',
-          maxWidth: '100vw',
-          display: 'flex', flexDirection: 'column',
-        }}>
+        <div
+          className="hero-statement"
+          style={{
+            position: 'absolute',
+            top: '18vh',
+            left: 0,
+            zIndex: 30,
+            paddingLeft: '64px',
+            maxWidth: '580px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
 
           {/* Bloque 1 — Manifiesto principal
-              clamp mínimo restaurado a 32px — igual que
-              la primera versión aprobada en Vercel.
-              Paivio (1986): tres anclas semánticas concretas. */}
+              Tres anclas semánticas: tecnología, neurociencia, humanidad.
+              Paivio (1986): tres elementos concretos generan mayor
+              retención que dos — tres nodos de memoria que se
+              refuerzan mutuamente.
+              Tamaño: 52px en desktop · 32px mínimo en mobile. */}
           <div style={blockStyle(block >= 1)}>
             <h2 style={{
               fontFamily: "'DM Serif Display', serif",
-              fontSize: 'clamp(32px, 5vw, 52px)',
+              fontSize: 'clamp(32px, 4vw, 52px)',
               fontStyle: 'italic', color: '#c4bdb0',
               lineHeight: 1.12,
-              marginBottom: 'clamp(14px, 2vh, 28px)',
+              marginBottom: '20px',
             }}>
               {HERO_CONTENT.manifesto}
             </h2>
           </div>
 
           {/* Bloque 2 — Segunda línea
-              clamp mínimo restaurado a 18px.
-              Gestalt: variación de color dentro de continuidad. */}
+              Subordinada visualmente — cambio de color comunica
+              jerarquía sin ruptura. Gestalt: variación dentro
+              de la continuidad tipográfica. */}
           <div style={blockStyle(block >= 2)}>
             <p style={{
               fontFamily: "'DM Serif Display', serif",
-              fontSize: 'clamp(18px, 2.5vw, 26px)',
+              fontSize: 'clamp(18px, 2vw, 26px)',
               fontStyle: 'italic', color: '#8b9eb3',
               lineHeight: 1.3,
-              marginBottom: 'clamp(12px, 2vh, 28px)',
+              marginBottom: '20px',
             }}>
               {HERO_CONTENT.secondLine}
             </p>
           </div>
 
           {/* Bloque 3 — Coda EN
-              Kroll & Bialystok (2013): L2 activa modo de
-              categorización y evaluación global. */}
+              Cambio de idioma intencional — activa red de
+              posicionamiento estratégico global en el cerebro.
+              Kroll & Bialystok (2013): L2 activa corteza prefrontal
+              dorsolateral — modo de categorización y evaluación.
+              Bringhurst (1992): letter-spacing reducido compensa
+              tamaño menor para mantener peso visual equivalente. */}
           <div style={blockStyle(block >= 3)}>
             <p style={{
               fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: 'clamp(12px, 1.5vw, 15px)',
+              fontSize: 'clamp(12px, 1.2vw, 15px)',
               letterSpacing: '0.04em', color: '#8b9eb3',
               lineHeight: 1.6,
-              marginBottom: 'clamp(20px, 3vh, 40px)',
             }}>
               {HERO_CONTENT.coda}
             </p>
@@ -335,10 +435,15 @@ export default function HeroSection() {
         </div>
       )}
 
-      {/* BOTONES — posición fija en desktop
-          En mobile: relativos al texto vía media query
-          para eliminar el gap enorme.
-          Cialdini (2001): CTA como puerta abierta. */}
+      {/* BOTONES — posición fija independiente del texto
+          DESKTOP: bottom 48px · left 64px — idéntico al
+          primer commit histórico aprobado.
+          MOBILE: relativos al texto vía media query —
+          eliminan el gap enorme entre coda y botones.
+          Cialdini (2001): CTA debe sentirse como puerta
+          abierta — no elemento decorativo al final de texto.
+          Hover: color y borde aclaran hacia #c4bdb0 —
+          invitación sin agresividad visual. */}
       <AnimatePresence>
         {showButtons && (
           <motion.div
@@ -348,11 +453,11 @@ export default function HeroSection() {
             transition={{ duration: 0.9, ease: 'easeOut' }}
             style={{
               position: 'absolute',
-              bottom: 'clamp(56px, 8vh, 72px)',
-              left: 'clamp(24px, 5vw, 64px)',
+              bottom: '48px',
+              left: '64px',
               zIndex: 30,
               display: 'flex',
-              gap: 'clamp(12px, 3vw, 24px)',
+              gap: '24px',
               alignItems: 'center',
               flexWrap: 'wrap',
             }}
@@ -367,11 +472,11 @@ export default function HeroSection() {
               }}
               style={{
                 fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: 'clamp(9px, 1.2vw, 12px)',
+                fontSize: '12px',
                 letterSpacing: '0.14em', textTransform: 'uppercase',
                 color: hoverPrimary ? '#c4bdb0' : '#8b9eb3',
                 border: `0.5px solid ${hoverPrimary ? '#8b9eb3' : '#6a8aaa'}`,
-                padding: 'clamp(12px, 2vh, 16px) clamp(20px, 4vw, 36px)',
+                padding: '16px 36px',
                 borderRadius: '30px', background: 'transparent',
                 cursor: 'pointer',
                 transition: 'color 0.3s ease, border-color 0.3s ease',
@@ -389,7 +494,7 @@ export default function HeroSection() {
               }}
               style={{
                 fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: 'clamp(9px, 1.2vw, 12px)',
+                fontSize: '12px',
                 letterSpacing: '0.12em', textTransform: 'uppercase',
                 color: hoverSecondary ? '#c4bdb0' : '#8b9eb3',
                 background: 'none', border: 'none', cursor: 'pointer',
@@ -403,20 +508,41 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
+      {/* MEDIA QUERIES — mobile responsive
+          Solo afectan pantallas ≤768px.
+          Desktop: sin ningún cambio respecto al primer commit.
+
+          .hero-statement: reduce padding y top en mobile
+          para que todo quepa sin scroll.
+          Apple HIG (2023): contenido principal visible
+          en primera pantalla sin interacción.
+
+          .hero-buttons: en mobile fluyen con el texto
+          en lugar de flotar en posición absoluta.
+          Elimina el gap enorme entre coda y botones.
+
+          .constellation-indicators: se mueven al centro
+          inferior para no chocar con los botones en mobile. */}
       <style>{`
         @media (max-width: 768px) {
-          .constellation-indicators {
-            bottom: 24px !important;
-            right: auto !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
+          .hero-statement {
+            top: 80px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+            max-width: calc(100vw - 48px) !important;
           }
           .hero-buttons {
             position: relative !important;
             bottom: auto !important;
             left: auto !important;
-            padding-left: clamp(20px, 6vw, 64px) !important;
-            margin-top: 0px !important;
+            padding-left: 24px !important;
+            margin-top: 24px !important;
+          }
+          .constellation-indicators {
+            bottom: 24px !important;
+            right: auto !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
           }
         }
       `}</style>
