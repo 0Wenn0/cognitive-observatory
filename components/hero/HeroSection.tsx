@@ -139,7 +139,7 @@ export default function HeroSection() {
       zIndex: 30,
       maxWidth: '380px',
       fontFamily: "'DM Serif Display', serif",
-      fontSize: 'clamp(14px, 2.5vw, 18px)',
+      fontSize: 'clamp(16px, 2.5vw, 18px)',
       fontStyle: 'italic',
       color: '#8b9eb3',
       lineHeight: 1.7,
@@ -527,7 +527,7 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* MEDIA QUERIES — solo afectan mobile (max-width: 768px)
+      {/* MEDIA QUERIES — solo afectan mobile (max-width: 430px)
           Desktop: sin ningún cambio respecto al primer commit.
 
           .hero-statement: top 56px fijos en mobile —
@@ -544,7 +544,7 @@ export default function HeroSection() {
           Estrategia de doble renderizado — solución definitiva
           al problema de especificidad CSS vs Framer Motion. */}
 <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 430px) {
 
           /* Hero statement — ocupa el viewport completo disponible.
              position absolute con top y bottom definidos crea
@@ -596,9 +596,11 @@ export default function HeroSection() {
           .hero-buttons-mobile {
             display: flex !important;
             flex-direction: column !important;
+            align-items: center !important;
             gap: 12px !important;
             margin-top: auto !important;
             padding-bottom: 48px !important;
+           
           }
 
           /* Botones desktop — ocultos en mobile.
