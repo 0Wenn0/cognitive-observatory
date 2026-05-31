@@ -171,9 +171,7 @@ export default function HeroSection() {
 
       {/* TEXTO SEMÁNTICO PARA SEO
           HTML puro — Next.js SSR lo indexa desde el servidor.
-          Google Search Central (2023): bots no leen WebGL.
-          Este elemento invisible garantiza indexabilidad
-          sin depender del canvas de Three.js. */}
+          Google Search Central (2023): bots no leen WebGL. */}
       <h1 style={{
         position: 'absolute', width: 1, height: 1,
         overflow: 'hidden', opacity: 0,
@@ -184,8 +182,7 @@ export default function HeroSection() {
       {/* FONDO ATMOSFÉRICO — placeholder para Three.js
           Gradiente asimétrico — iluminación lateral contemplativa.
           Adelson (2000): gradiente de profundidad crea espacio
-          tridimensional habitable — sensación de estar dentro.
-          Reemplazar con <ParticleSystem /> en Fase Visual 01. */}
+          tridimensional habitable — sensación de estar dentro. */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 10,
         background: 'radial-gradient(ellipse at 38% 52%, #0d1624 0%, #080b12 68%)',
@@ -194,12 +191,10 @@ export default function HeroSection() {
       {/* DESTELLO ESTELAR — evento único pre-final
           Centro 2px + 4 capas de gradiente concéntrico.
           Tarkovsky (Stalker, 1979): luz puntual que sugiere
-          sin explicar. El amanecer no pulsa — llega una vez
-          y lo ilumina todo. Referencia cinematográfica oficial.
+          sin explicar — referencia cinematográfica oficial.
           times: [0, 0.04, 0.80, 1] — aparición casi inmediata,
           disolución muy lenta y contemplativa.
-          Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros
-          — respuesta de orientación involuntaria. */}
+          Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros. */}
       {showFlash && (
         <div style={{
           position: 'absolute', top: '68px',
@@ -263,9 +258,7 @@ export default function HeroSection() {
           que la activen aunque sean sutiles.
           Mobile: centro inferior vía media query CSS.
           Gestalt — continuidad (Wertheimer, 1923): puntos
-          conectados se perciben como sistema, no lista.
-          Flecha → entre punto 1 y 2: Gibson (1979) —
-          affordance universal decodificada en <100ms. */}
+          conectados se perciben como sistema, no lista. */}
       <div
         className="constellation-indicators"
         style={{
@@ -308,10 +301,10 @@ export default function HeroSection() {
       </div>
 
       {/* HINT DE BYPASS — desaparece después de 3s
-          Aparece cuando el usuario ya vio la primera frase
-          y está orientado. Desaparece antes de volverse ruido.
           Krug (2014): el usuario no debe deducir cómo funciona
-          la interfaz sin ninguna señal visible. */}
+          la interfaz sin ninguna señal visible.
+          Csikszentmihalyi (1990): el exceso de instrucción
+          destruye la sensación de flujo y descubrimiento. */}
       <AnimatePresence>
         {showHint && (
           <motion.p
@@ -338,8 +331,7 @@ export default function HeroSection() {
           Tres posiciones: tierra → horizonte → cielo.
           Yarbus (1967): el cambio de zona sacádica activa
           sensación de nueva escena cognitiva.
-          Clic adelanta la frase pendiente — la siguiente
-          sigue su ritmo natural de 3.8s. */}
+          Clic adelanta la frase pendiente — bypass de cortesía. */}
       <AnimatePresence mode="wait">
         {activeScene && activeScene.microcopy && (
           <motion.p
@@ -357,14 +349,14 @@ export default function HeroSection() {
       </AnimatePresence>
 
       {/* HERO STATEMENT — bloques como latidos
-          DESKTOP: paddingLeft 64px · maxWidth 580px · top 18vh
+          DESKTOP: top 18vh · paddingLeft 64px · maxWidth 580px
           Idéntico al primer commit histórico aprobado.
           Rayner (1998): texto en tercio izquierdo — primera
           fijación ocular natural en lectores occidentales.
-          Posner (1980): periferia derecha activa curiosidad
-          exploratoria sin interferir con el texto.
-          MOBILE: media query ajusta todo sin tocar desktop.
-          Apple HIG (2023): contenido visible sin scroll. */}
+          MOBILE: media query ajusta top y padding sin tocar
+          desktop. Apple HIG (2023): contenido visible sin scroll.
+          Treisman (1980): manifiesto mantiene 32px mínimo —
+          es el elemento de mayor jerarquía visual. */}
       {showHero && (
         <div
           className="hero-statement"
@@ -381,11 +373,9 @@ export default function HeroSection() {
         >
 
           {/* Bloque 1 — Manifiesto principal
-              Tres anclas semánticas: tecnología, neurociencia, humanidad.
-              Paivio (1986): tres elementos concretos generan mayor
-              retención que dos — tres nodos de memoria que se
-              refuerzan mutuamente.
-              Tamaño: 52px en desktop · 32px mínimo en mobile. */}
+              Paivio (1986): tres anclas semánticas concretas
+              generan mayor retención — tecnología, neurociencia,
+              humanidad activan tres nodos de memoria simultáneos. */}
           <div style={blockStyle(block >= 1)}>
             <h2 style={{
               fontFamily: "'DM Serif Display', serif",
@@ -415,8 +405,6 @@ export default function HeroSection() {
           </div>
 
           {/* Bloque 3 — Coda EN
-              Cambio de idioma intencional — activa red de
-              posicionamiento estratégico global en el cerebro.
               Kroll & Bialystok (2013): L2 activa corteza prefrontal
               dorsolateral — modo de categorización y evaluación.
               Bringhurst (1992): letter-spacing reducido compensa
@@ -435,15 +423,13 @@ export default function HeroSection() {
         </div>
       )}
 
-      {/* BOTONES — posición fija independiente del texto
+      {/* BOTONES — posición fija independiente del texto.
           DESKTOP: bottom 48px · left 64px — idéntico al
           primer commit histórico aprobado.
-          MOBILE: relativos al texto vía media query —
-          eliminan el gap enorme entre coda y botones.
-          Cialdini (2001): CTA debe sentirse como puerta
-          abierta — no elemento decorativo al final de texto.
-          Hover: color y borde aclaran hacia #c4bdb0 —
-          invitación sin agresividad visual. */}
+          MOBILE: bottom y left ajustados vía media query.
+          Cialdini (2001): CTA como puerta abierta —
+          no elemento decorativo al final del contenido.
+          Hover: invitación sin agresividad visual. */}
       <AnimatePresence>
         {showButtons && (
           <motion.div
@@ -508,38 +494,51 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* MEDIA QUERIES — mobile responsive
-          Solo afectan pantallas ≤768px.
+      {/* MEDIA QUERIES — solo afectan mobile (max-width: 768px)
           Desktop: sin ningún cambio respecto al primer commit.
 
-          .hero-statement: reduce padding y top en mobile
-          para que todo quepa sin scroll.
-          Apple HIG (2023): contenido principal visible
-          en primera pantalla sin interacción.
+          .hero-statement: top 72px fijos — en mobile 18vh = 156px
+          lo que deja demasiado espacio arriba sin contenido.
+          padding reducido a 20px para aprovechar el ancho.
+          Apple HIG (2023): contenido visible en primera pantalla.
 
-          .hero-buttons: en mobile fluyen con el texto
-          en lugar de flotar en posición absoluta.
-          Elimina el gap enorme entre coda y botones.
+          h2: mantiene 32px mínimo — tamaño aprobado en primer commit.
+          Solo reducimos line-height y marginBottom para ganar
+          espacio vertical sin sacrificar jerarquía visual.
+          Treisman (1980): el manifiesto no puede reducirse
+          sin perder su función de elemento de mayor peso perceptivo.
 
-          .constellation-indicators: se mueven al centro
-          inferior para no chocar con los botones en mobile. */}
+          .hero-buttons: bottom ajustado para no chocar con
+          los indicadores de constelación en mobile.
+
+          .constellation-indicators: centro inferior en mobile —
+          separados de los botones para evitar colisión visual. */}
       <style>{`
         @media (max-width: 768px) {
           .hero-statement {
-            top: 80px !important;
-            padding-left: 24px !important;
-            padding-right: 24px !important;
-            max-width: calc(100vw - 48px) !important;
+            top: 72px !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            max-width: calc(100vw - 40px) !important;
+          }
+          .hero-statement h2 {
+            font-size: 32px !important;
+            line-height: 1.08 !important;
+            margin-bottom: 10px !important;
+          }
+          .hero-statement p:first-of-type {
+            margin-bottom: 8px !important;
+          }
+          .hero-statement p:last-of-type {
+            margin-bottom: 0px !important;
           }
           .hero-buttons {
-            position: relative !important;
-            bottom: auto !important;
-            left: auto !important;
-            padding-left: 24px !important;
-            margin-top: 24px !important;
+            bottom: 56px !important;
+            left: 20px !important;
+            gap: 16px !important;
           }
           .constellation-indicators {
-            bottom: 24px !important;
+            bottom: 20px !important;
             right: auto !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
