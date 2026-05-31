@@ -545,87 +545,55 @@ export default function HeroSection() {
           al problema de especificidad CSS vs Framer Motion. */}
 <style>{`
         @media (max-width: 430px) {
-
-          /* Hero statement — ocupa el viewport completo disponible.
-             position absolute con top y bottom definidos crea
-             un contenedor de altura exacta = viewport - 100px.
-             Esto permite que margin-top: auto en los botones
-             distribuya el espacio sobrante automáticamente.
-             Apple HIG (2023): contenido visible sin scroll
-             en primera pantalla — regla fundacional mobile. */
           .hero-statement {
             top: 52px !important;
             bottom: 48px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
-            max-width: calc(100vw - 40px) !important;
+            max-width: 100vw !important;
+            box-sizing: border-box !important;
           }
-
-          /* Manifiesto — 28px aprobado. NO REDUCIR.
-             Rayner (1998): mantiene jerarquía visual en mobile.
-             Treisman (1980): elemento de mayor peso perceptivo —
-             no se modifica sin autorización explícita de Wendy. */
           .hero-statement h2 {
             font-size: 28px !important;
             line-height: 1.05 !important;
             margin-bottom: 8px !important;
           }
-
-          /* Segunda línea — tamaño intacto (18px mínimo del clamp).
-             Margen reducido para liberar espacio vertical. */
           .hero-statement p:first-of-type {
             margin-bottom: 8px !important;
           }
-
-          /* Coda EN — tamaño intacto (12px mínimo del clamp).
-             Sin margen inferior — los botones tienen su
-             propio espaciado via margin-top: auto. */
           .hero-statement p:last-of-type {
             margin-bottom: 0px !important;
           }
 
-          /* Botones mobile — margin-top: auto es la clave.
-             En un flex container con altura definida,
-             margin-top: auto consume todo el espacio sobrante
-             y empuja los botones hacia abajo naturalmente.
-             padding-bottom: 48px reserva espacio para los
-             indicadores de constelación en bottom: 12px.
-             Resultado: texto arriba, botones abajo,
-             indicadores al fondo — sin gap enorme ni scroll.
-             Cialdini (2001): CTA visible con espacio propio. */
+          /* Botones mobile — margin-top auto los empuja abajo.
+             padding-bottom: 64px reserva espacio suficiente
+             para que los indicadores en bottom: 8px
+             no se encimen con "EXPLORE THE OBSERVATORY".
+             64px = altura del botón secundario + margen seguro. */
           .hero-buttons-mobile {
             display: flex !important;
             flex-direction: column !important;
-            align-items: center !important;
+            align-items: flex-start !important;
             gap: 12px !important;
             margin-top: auto !important;
-            padding-bottom: 48px !important;
-           
+            padding-bottom: 64px !important;
           }
 
-          /* Botones desktop — ocultos en mobile.
-             Se renderizan en el DOM pero no se muestran.
-             Estrategia de doble renderizado — solución al
-             problema de especificidad CSS vs Framer Motion. */
           .hero-buttons-desktop {
             display: none !important;
           }
 
-          /* Indicadores de constelación — centro inferior fijo.
-             bottom: 12px garantiza visibilidad dentro del
-             viewport sin necesidad de scroll.
-             Separados de los botones por padding-bottom: 48px.
-             Posner (1980): equilibrio perceptivo — elemento
-             sutil que activa la zona inferior sin saturarla. */
+          /* Indicadores — fijos en el fondo.
+             Separados de los botones por padding-bottom: 64px.
+             Sin encimamiento garantizado. */
           .constellation-indicators {
-            bottom: 12px !important;
+            bottom: 8px !important;
             right: auto !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
           }
         }
       `}</style>
-
     </section>
   );
 }
