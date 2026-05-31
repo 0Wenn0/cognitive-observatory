@@ -513,60 +513,43 @@ export default function HeroSection() {
 
           .constellation-indicators: centro inferior en mobile —
           separados de los botones para evitar colisión visual. */}
-     <style>{`
+    <style>{`
         @media (max-width: 768px) {
-
-          /* Hero statement — sube y reduce para caber en 820px.
-             Motorola G60 viewport real: ~390x820px en Chrome mobile.
-             top 56px libera 16px vs 72px anterior.
-             Apple HIG (2023): contenido visible sin scroll
-             en primera pantalla — regla fundacional mobile. */
           .hero-statement {
             top: 56px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
             max-width: calc(100vw - 40px) !important;
           }
-
-          /* Manifiesto — 28px en mobile.
-             Rayner (1998): 28px+ mantiene jerarquía visual
-             en pantallas de alta densidad (395ppi G60).
-             Apple HIG (2023): mínimo 17px para legibilidad —
-             28px es 64% mayor que el mínimo, seguro y legible.
-             line-height 1.05 reduce altura total del bloque
-             sin afectar legibilidad en texto corto. */
           .hero-statement h2 {
             font-size: 28px !important;
             line-height: 1.05 !important;
             margin-bottom: 6px !important;
           }
-
-          /* Segunda línea — margen mínimo.
-             El tamaño mínimo del clamp (18px) se mantiene. */
           .hero-statement p:first-of-type {
             margin-bottom: 6px !important;
           }
-
-          /* Coda EN — sin margen inferior.
-             Los botones flotan independientes — no necesitan
-             separación del texto en mobile. */
           .hero-statement p:last-of-type {
-            margin-bottom: 0px !important;
+            margin-bottom: 16px !important;
           }
 
-          /* Botones — posición fija más baja que los indicadores.
-             bottom 56px garantiza que no choquen con
-             los indicadores de constelación en bottom 20px.
-             Nielsen (1994): CTAs en posición estable y predecible. */
+          /* Botones — en mobile siguen al texto inmediatamente.
+             position: static los saca del flujo absoluto y los
+             coloca justo después del último bloque de texto.
+             Elimina el gap enorme entre coda y botones.
+             Apple HIG (2023): CTA visible sin scroll. */
           .hero-buttons {
-            bottom: 56px !important;
-            left: 20px !important;
+            position: static !important;
+            bottom: auto !important;
+            left: auto !important;
+            margin-left: 20px !important;
+            margin-top: 0px !important;
             gap: 16px !important;
           }
 
-          /* Indicadores — centro inferior en mobile.
-             Separados de los botones — sin colisión visual.
-             Posner (1980): equilibrio perceptivo preservado. */
+          /* Indicadores — centro inferior fijo.
+             No chocan con los botones porque ahora
+             los botones fluyen con el texto, no flotan. */
           .constellation-indicators {
             bottom: 20px !important;
             right: auto !important;
