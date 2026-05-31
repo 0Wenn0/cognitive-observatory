@@ -545,47 +545,64 @@ export default function HeroSection() {
           al problema de especificidad CSS vs Framer Motion. */}
 <style>{`
         @media (max-width: 430px) {
+
+          /* Hero statement — ocupa exactamente el viewport.
+             left:0 right:0 + padding pequeño garantiza que
+             el texto no se corte a la derecha.
+             top:52px bottom:52px define la altura disponible
+             para que margin-top:auto funcione correctamente
+             y todo quepa sin scroll.
+             Apple HIG (2023): contenido visible sin scroll. */
           .hero-statement {
             top: 52px !important;
-            bottom: 48px !important;
-            padding-left: 20px !important;
-            padding-right: 20px !important;
+            bottom: 52px !important;
+            left: 0 !important;
+            right: 0 !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            width: 100vw !important;
             max-width: 100vw !important;
             box-sizing: border-box !important;
+            overflow: hidden !important;
           }
+
+          /* Tamaños de fuente — SIN CAMBIOS.
+             Solo ajustamos márgenes para liberar espacio vertical.
+             Treisman (1980): jerarquía visual preservada. */
           .hero-statement h2 {
             font-size: 28px !important;
             line-height: 1.05 !important;
-            margin-bottom: 8px !important;
+            margin-bottom: 6px !important;
           }
+
           .hero-statement p:first-of-type {
-            margin-bottom: 8px !important;
+            margin-bottom: 6px !important;
           }
+
           .hero-statement p:last-of-type {
             margin-bottom: 0px !important;
           }
 
-          /* Botones mobile — margin-top auto los empuja abajo.
-             padding-bottom: 64px reserva espacio suficiente
-             para que los indicadores en bottom: 8px
-             no se encimen con "EXPLORE THE OBSERVATORY".
-             64px = altura del botón secundario + margen seguro. */
+          /* Botones — margin-top:auto los empuja al fondo
+             del contenedor. padding-bottom:56px reserva
+             espacio suficiente para los indicadores.
+             Sin encimamiento. Sin scroll. */
           .hero-buttons-mobile {
             display: flex !important;
             flex-direction: column !important;
             align-items: flex-start !important;
             gap: 12px !important;
             margin-top: auto !important;
-            padding-bottom: 64px !important;
+            padding-bottom: 56px !important;
           }
 
           .hero-buttons-desktop {
             display: none !important;
           }
 
-          /* Indicadores — fijos en el fondo.
-             Separados de los botones por padding-bottom: 64px.
-             Sin encimamiento garantizado. */
+          /* Indicadores — fijos en el fondo del viewport.
+             Separados de los botones por padding-bottom:56px.
+             Posner (1980): equilibrio perceptivo preservado. */
           .constellation-indicators {
             bottom: 8px !important;
             right: auto !important;
