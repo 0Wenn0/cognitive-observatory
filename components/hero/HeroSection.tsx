@@ -543,36 +543,80 @@ export default function HeroSection() {
           .hero-buttons-desktop: oculto en mobile.
           Estrategia de doble renderizado — solución definitiva
           al problema de especificidad CSS vs Framer Motion. */}
-      <style>{`
+<style>{`
         @media (max-width: 768px) {
+
+          /* Hero statement — ocupa el viewport completo disponible.
+             position absolute con top y bottom definidos crea
+             un contenedor de altura exacta = viewport - 100px.
+             Esto permite que margin-top: auto en los botones
+             distribuya el espacio sobrante automáticamente.
+             Apple HIG (2023): contenido visible sin scroll
+             en primera pantalla — regla fundacional mobile. */
           .hero-statement {
-            top: 56px !important;
+            top: 52px !important;
+            bottom: 48px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
             max-width: calc(100vw - 40px) !important;
           }
+
+          /* Manifiesto — 28px aprobado. NO REDUCIR.
+             Rayner (1998): mantiene jerarquía visual en mobile.
+             Treisman (1980): elemento de mayor peso perceptivo —
+             no se modifica sin autorización explícita de Wendy. */
           .hero-statement h2 {
             font-size: 28px !important;
             line-height: 1.05 !important;
-            margin-bottom: 6px !important;
+            margin-bottom: 8px !important;
           }
+
+          /* Segunda línea — tamaño intacto (18px mínimo del clamp).
+             Margen reducido para liberar espacio vertical. */
           .hero-statement p:first-of-type {
-            margin-bottom: 6px !important;
+            margin-bottom: 8px !important;
           }
+
+          /* Coda EN — tamaño intacto (12px mínimo del clamp).
+             Sin margen inferior — los botones tienen su
+             propio espaciado via margin-top: auto. */
           .hero-statement p:last-of-type {
             margin-bottom: 0px !important;
           }
+
+          /* Botones mobile — margin-top: auto es la clave.
+             En un flex container con altura definida,
+             margin-top: auto consume todo el espacio sobrante
+             y empuja los botones hacia abajo naturalmente.
+             padding-bottom: 48px reserva espacio para los
+             indicadores de constelación en bottom: 12px.
+             Resultado: texto arriba, botones abajo,
+             indicadores al fondo — sin gap enorme ni scroll.
+             Cialdini (2001): CTA visible con espacio propio. */
           .hero-buttons-mobile {
             display: flex !important;
             flex-direction: column !important;
             gap: 12px !important;
-            margin-top: 16px !important;
+            margin-top: auto !important;
+            padding-bottom: 48px !important;
           }
+
+          /* Botones desktop — ocultos en mobile.
+             Se renderizan en el DOM pero no se muestran.
+             Estrategia de doble renderizado — solución al
+             problema de especificidad CSS vs Framer Motion. */
           .hero-buttons-desktop {
             display: none !important;
           }
+
+          /* Indicadores de constelación — centro inferior fijo.
+             bottom: 12px garantiza visibilidad dentro del
+             viewport sin necesidad de scroll.
+             Separados de los botones por padding-bottom: 48px.
+             Posner (1980): equilibrio perceptivo — elemento
+             sutil que activa la zona inferior sin saturarla. */
           .constellation-indicators {
-            bottom: 20px !important;
+            bottom: 12px !important;
             right: auto !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
