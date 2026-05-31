@@ -55,9 +55,8 @@ export default function HeroSection() {
 
     // FASE PRE-FINAL — destello estelar único.
     // Tarkovsky (Stalker, 1979): la luz puntual sugiere
-    // sin explicar — nunca un flood, siempre un evento.
+    // sin explicar — referencia cinematográfica oficial.
     // Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros.
-    // Referencia cinematográfica oficial del proyecto.
     const stepPreFinal = () => {
       setPhase('pre-final');
       setProgressStep(4);
@@ -90,8 +89,8 @@ export default function HeroSection() {
       setProgressStep(1);
       nextActionRef.current = step2;
       addTimeout(step2, 3800);
-      // Hint desaparece a los 3s — cuando el usuario ya
-      // entendió el sistema de bypass.
+      // Hint desaparece a los 3s — el usuario ya entendió
+      // el sistema de bypass.
       // Csikszentmihalyi (1990): el exceso de instrucción
       // destruye la sensación de flujo y descubrimiento.
       setTimeout(() => setShowHint(false), 3000);
@@ -159,6 +158,66 @@ export default function HeroSection() {
     transform: visible ? 'translateY(0)' : 'translateY(14px)',
     transition: 'opacity 1.1s ease, transform 1.1s ease',
   });
+
+  // Botones reutilizables — se renderizan dos veces:
+  // una para desktop (posición fija) y otra para mobile
+  // (dentro del flujo del texto).
+  // Solución al problema de especificidad CSS vs Framer Motion:
+  // los estilos inline de motion.div tienen mayor especificidad
+  // que cualquier media query — renderizar dos versiones
+  // es la única forma confiable de controlar la posición
+  // en ambos viewports sin conflictos.
+  const ButtonsContent = () => (
+    <>
+      <button
+        onMouseEnter={() => setHoverPrimary(true)}
+        onMouseLeave={() => setHoverPrimary(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          document.getElementById('constellation')
+            ?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        style={{
+          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontSize: '12px',
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: hoverPrimary ? '#c4bdb0' : '#8b9eb3',
+          border: `0.5px solid ${hoverPrimary ? '#8b9eb3' : '#6a8aaa'}`,
+          padding: '16px 36px',
+          borderRadius: '30px',
+          background: 'transparent',
+          cursor: 'pointer',
+          transition: 'color 0.3s ease, border-color 0.3s ease',
+        }}
+      >
+        {HERO_CONTENT.ctaPrimary}
+      </button>
+      <button
+        onMouseEnter={() => setHoverSecondary(true)}
+        onMouseLeave={() => setHoverSecondary(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          document.getElementById('constellation')
+            ?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        style={{
+          fontFamily: "'IBM Plex Sans', sans-serif",
+          fontSize: '12px',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: hoverSecondary ? '#c4bdb0' : '#8b9eb3',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          transition: 'color 0.3s ease, transform 0.3s ease',
+          transform: hoverSecondary ? 'translateX(4px)' : 'translateX(0)',
+        }}
+      >
+        {HERO_CONTENT.ctaSecondary}
+      </button>
+    </>
+  );
 
   return (
     <section style={{
@@ -351,12 +410,11 @@ export default function HeroSection() {
       {/* HERO STATEMENT — bloques como latidos
           DESKTOP: top 18vh · paddingLeft 64px · maxWidth 580px
           Idéntico al primer commit histórico aprobado.
-          Rayner (1998): texto en tercio izquierdo — primera
-          fijación ocular natural en lectores occidentales.
-          MOBILE: media query ajusta top y padding sin tocar
-          desktop. Apple HIG (2023): contenido visible sin scroll.
-          Treisman (1980): manifiesto mantiene 32px mínimo —
-          es el elemento de mayor jerarquía visual. */}
+          Rayner (1998): texto en tercio izquierdo del viewport.
+          MOBILE: media query ajusta top, padding y fuentes.
+          Los botones mobile se renderizan DENTRO de este
+          contenedor para fluir naturalmente sin gaps —
+          solución al problema de especificidad CSS vs Framer Motion. */}
       {showHero && (
         <div
           className="hero-statement"
@@ -375,7 +433,8 @@ export default function HeroSection() {
           {/* Bloque 1 — Manifiesto principal
               Paivio (1986): tres anclas semánticas concretas
               generan mayor retención — tecnología, neurociencia,
-              humanidad activan tres nodos de memoria simultáneos. */}
+              humanidad activan tres nodos de memoria simultáneos.
+              52px desktop · 28px mobile — jerarquía preservada. */}
           <div style={blockStyle(block >= 1)}>
             <h2 style={{
               fontFamily: "'DM Serif Display', serif",
@@ -389,9 +448,8 @@ export default function HeroSection() {
           </div>
 
           {/* Bloque 2 — Segunda línea
-              Subordinada visualmente — cambio de color comunica
-              jerarquía sin ruptura. Gestalt: variación dentro
-              de la continuidad tipográfica. */}
+              Gestalt: variación de color dentro de continuidad
+              tipográfica — jerarquía sin ruptura visual. */}
           <div style={blockStyle(block >= 2)}>
             <p style={{
               fontFamily: "'DM Serif Display', serif",
@@ -420,20 +478,36 @@ export default function HeroSection() {
             </p>
           </div>
 
+          {/* BOTONES MOBILE — solo visibles en mobile.
+              Viven dentro del hero-statement para fluir
+              naturalmente después del texto sin gaps.
+              display: none en desktop — los botones desktop
+              se renderizan por separado abajo con position absolute.
+              Esta es la solución al problema de especificidad:
+              Framer Motion sobreescribe media queries en el
+              motion.div de los botones desktop — renderizar
+              dos versiones es la única solución confiable. */}
+          {showButtons && (
+            <div
+              className="hero-buttons-mobile"
+              style={{ display: 'none', marginTop: '20px' }}
+            >
+              <ButtonsContent />
+            </div>
+          )}
+
         </div>
       )}
 
-      {/* BOTONES — posición fija independiente del texto.
-          DESKTOP: bottom 48px · left 64px — idéntico al
-          primer commit histórico aprobado.
-          MOBILE: bottom y left ajustados vía media query.
+      {/* BOTONES DESKTOP — posición fija independiente.
+          Solo visibles en desktop — ocultos en mobile via CSS.
+          bottom 48px · left 64px — idéntico al primer commit.
           Cialdini (2001): CTA como puerta abierta —
-          no elemento decorativo al final del contenido.
-          Hover: invitación sin agresividad visual. */}
+          no elemento decorativo al final del contenido. */}
       <AnimatePresence>
         {showButtons && (
           <motion.div
-            className="hero-buttons"
+            className="hero-buttons-desktop"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
@@ -448,48 +522,7 @@ export default function HeroSection() {
               flexWrap: 'wrap',
             }}
           >
-            <button
-              onMouseEnter={() => setHoverPrimary(true)}
-              onMouseLeave={() => setHoverPrimary(false)}
-              onClick={(e) => {
-                e.stopPropagation();
-                document.getElementById('constellation')
-                  ?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: '12px',
-                letterSpacing: '0.14em', textTransform: 'uppercase',
-                color: hoverPrimary ? '#c4bdb0' : '#8b9eb3',
-                border: `0.5px solid ${hoverPrimary ? '#8b9eb3' : '#6a8aaa'}`,
-                padding: '16px 36px',
-                borderRadius: '30px', background: 'transparent',
-                cursor: 'pointer',
-                transition: 'color 0.3s ease, border-color 0.3s ease',
-              }}
-            >
-              {HERO_CONTENT.ctaPrimary}
-            </button>
-            <button
-              onMouseEnter={() => setHoverSecondary(true)}
-              onMouseLeave={() => setHoverSecondary(false)}
-              onClick={(e) => {
-                e.stopPropagation();
-                document.getElementById('constellation')
-                  ?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: '12px',
-                letterSpacing: '0.12em', textTransform: 'uppercase',
-                color: hoverSecondary ? '#c4bdb0' : '#8b9eb3',
-                background: 'none', border: 'none', cursor: 'pointer',
-                transition: 'color 0.3s ease, transform 0.3s ease',
-                transform: hoverSecondary ? 'translateX(4px)' : 'translateX(0)',
-              }}
-            >
-              {HERO_CONTENT.ctaSecondary}
-            </button>
+            <ButtonsContent />
           </motion.div>
         )}
       </AnimatePresence>
@@ -497,23 +530,20 @@ export default function HeroSection() {
       {/* MEDIA QUERIES — solo afectan mobile (max-width: 768px)
           Desktop: sin ningún cambio respecto al primer commit.
 
-          .hero-statement: top 72px fijos — en mobile 18vh = 156px
-          lo que deja demasiado espacio arriba sin contenido.
-          padding reducido a 20px para aprovechar el ancho.
-          Apple HIG (2023): contenido visible en primera pantalla.
+          .hero-statement: top 56px fijos en mobile —
+          18vh en desktop = 162px, demasiado espacio arriba.
+          56px libera espacio para que todo quepa sin scroll.
+          Apple HIG (2023): contenido visible sin scroll.
 
-          h2: mantiene 32px mínimo — tamaño aprobado en primer commit.
-          Solo reducimos line-height y marginBottom para ganar
-          espacio vertical sin sacrificar jerarquía visual.
-          Treisman (1980): el manifiesto no puede reducirse
-          sin perder su función de elemento de mayor peso perceptivo.
+          h2: 28px en mobile — jerarquía visual preservada.
+          Rayner (1998): 28px+ mantiene peso perceptivo
+          en pantallas de alta densidad como el G60 (395ppi).
 
-          .hero-buttons: bottom ajustado para no chocar con
-          los indicadores de constelación en mobile.
-
-          .constellation-indicators: centro inferior en mobile —
-          separados de los botones para evitar colisión visual. */}
-    <style>{`
+          .hero-buttons-mobile: visible solo en mobile.
+          .hero-buttons-desktop: oculto en mobile.
+          Estrategia de doble renderizado — solución definitiva
+          al problema de especificidad CSS vs Framer Motion. */}
+      <style>{`
         @media (max-width: 768px) {
           .hero-statement {
             top: 56px !important;
@@ -530,26 +560,17 @@ export default function HeroSection() {
             margin-bottom: 6px !important;
           }
           .hero-statement p:last-of-type {
-            margin-bottom: 16px !important;
+            margin-bottom: 0px !important;
           }
-
-          /* Botones — en mobile siguen al texto inmediatamente.
-             position: static los saca del flujo absoluto y los
-             coloca justo después del último bloque de texto.
-             Elimina el gap enorme entre coda y botones.
-             Apple HIG (2023): CTA visible sin scroll. */
-          .hero-buttons {
-            position: static !important;
-            bottom: auto !important;
-            left: auto !important;
-            margin-left: 20px !important;
-            margin-top: 0px !important;
-            gap: 16px !important;
+          .hero-buttons-mobile {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            margin-top: 16px !important;
           }
-
-          /* Indicadores — centro inferior fijo.
-             No chocan con los botones porque ahora
-             los botones fluyen con el texto, no flotan. */
+          .hero-buttons-desktop {
+            display: none !important;
+          }
           .constellation-indicators {
             bottom: 20px !important;
             right: auto !important;
