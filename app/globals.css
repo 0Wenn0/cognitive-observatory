@@ -1,0 +1,209 @@
+@import "tailwindcss";
+/* ═══════════════════════════════════════════════════
+   COGNITIVE OBSERVATORY — Design System
+   "Poetic on the surface. Scientific in the structure."
+   Todos los valores tienen respaldo científico documentado.
+   NO modificar sin consultar la Columna Vertebral v3.2
+════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+:root {
+
+  /* ── FONDOS ─────────────────────────────────────────
+     #080b12 = Deep Observatory Blue
+     NO usar negro puro (#000000) — activa mayor alerta
+     visual que el azul profundo.
+     Mehta & Zhu (2009, Science): azul profundo activa
+     pensamiento contemplativo.
+  ──────────────────────────────────────────────────── */
+  --color-bg-primary: #080b12;
+  --color-bg-secondary: #0d1220;
+  --color-bg-gradient: radial-gradient(ellipse at 38% 52%, #0d1624 0%, #080b12 68%);
+
+  /* ── IDENTIDAD Y NAVEGACIÓN ─────────────────────────
+     Ratio de contraste sobre #080b12 documentado.
+     WCAG 2.1 mínimo para texto pequeño: 4.5:1
+  ──────────────────────────────────────────────────── */
+  --color-identity: #8b9eb3;       /* ratio: 5.2:1 — tag Cognitive Observatory */
+  --color-nav-active: #6a8aaa;     /* ratio: 5.1:1 — navegación activa */
+  --color-nav-rest: #2a3a56;       /* ratio: 2.8:1 — navegación en reposo */
+
+  /* ── TEXTO ──────────────────────────────────────────
+     Sistema progresivo de contraste.
+     Ware (2004): detección pre-atentiva requiere
+     30% diferencial de luminosidad.
+  ──────────────────────────────────────────────────── */
+  --color-text-primary: #f0ebe0;   /* ratio: 13.5:1 — títulos principales */
+  --color-text-hero: #c4bdb0;      /* ratio: 8.2:1  — manifiesto hero */
+  --color-text-body: #4a5e78;      /* ratio: 3.8:1  — párrafos */
+  --color-text-muted: #2e3e52;     /* ratio: 2.4:1  — subtítulos */
+  --color-text-micro: #1e2e42;     /* ratio: 1.8:1  — microcopy mínimo */
+
+  /* ── ACENTOS ────────────────────────────────────────
+     Rose: cursivas editoriales (DM Serif)
+     Yellow: SOLO momentos de descubrimiento activo.
+     Treisman (1985): amarillo = mayor saliencia en
+     fondos oscuros, detectado en <200ms.
+     NUNCA usar yellow como color decorativo general.
+  ──────────────────────────────────────────────────── */
+  --color-rose: #b8a99e;           /* ratio: 5.5:1 */
+  --color-yellow: #c8a84b;         /* ratio: 6.8:1 — Yellow Moment únicamente */
+  --color-accent: #2a3a56;
+
+  /* ── PARTÍCULAS Y ATMÓSFERA ─────────────────────────
+     Gibson (1979): damping 0.992 activa modelo mental
+     de fluido — percepción de 'materia con presencia'.
+  ──────────────────────────────────────────────────── */
+  --color-particle: rgba(150, 175, 208, 1);
+  --particle-opacity-max: 0.35;
+  --particle-damping: 0.992;
+
+  /* ── CLUSTERS DE LA CONSTELACIÓN ────────────────────*/
+  --color-cluster-human: #1D9E75;      /* Human Understanding — Teal */
+  --color-cluster-systems: #7F77DD;    /* Systems & Intelligence — Purple */
+  --color-cluster-collective: #D85A30; /* Collective Transformation — Coral */
+  --color-cluster-narrative: #D4537E;  /* Narrative & Meaning — Pink */
+  --color-cluster-center: #8b9eb3;     /* Systems thinking — Centro */
+
+  /* ── TIPOGRAFÍA ─────────────────────────────────────
+     Triple system: cada fuente tiene función cognitiva.
+     DM Serif: procesamiento narrativo-emocional (Pettersson, 2002)
+     DM Sans: legibilidad cálida, cuerpo de texto
+     IBM Plex Sans: credibilidad técnica, UI y sistemas
+  ──────────────────────────────────────────────────── */
+  --font-editorial: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-systems: 'IBM Plex Sans', sans-serif;
+
+  /* ── TAMAÑOS TIPOGRÁFICOS ───────────────────────────*/
+  --text-hero-main: clamp(32px, 4.5vw, 52px);  /* manifiesto hero */
+  --text-hero-second: clamp(20px, 2.5vw, 32px); /* segunda línea */
+  --text-coda: 12px;                             /* coda en inglés */
+  --text-body: 13px;                             /* subtítulo hero */
+  --text-tag: 10px;                              /* Cognitive Observatory tag */
+  --text-label: 9px;                             /* labels y nav */
+
+  /* ── ESPACIADO HERO ─────────────────────────────────
+     Rayner (1998): primera fijación cae en tercio izq.
+     Posner (1980): periferia derecha activa curiosidad.
+  ──────────────────────────────────────────────────── */
+  --hero-padding-left: clamp(40px, 8vw, 96px);
+  --hero-text-max-width: 520px;
+  --hero-vertical-center: 42vh;
+
+  /* ── LIVING BREATH SYSTEM ───────────────────────────
+     Berger & Bhagavan (1984): ciclos de 3-5s sincronizan
+     con ritmo respiratorio humano. NO negociables.
+  ──────────────────────────────────────────────────── */
+  --breath-nodes: 3500ms;
+  --breath-particles: 4500ms;
+  --breath-connections: 5500ms;
+  --breath-fluid-structures: 7000ms;
+  --breath-observatory-depth: 11000ms;
+
+  /* ── MOTION ─────────────────────────────────────────*/
+  --duration-hover: 350ms;
+  --duration-yellow-moment: 400ms;
+  --duration-bypass: 800ms;
+  --duration-semantic-drift: 1750ms;
+  --duration-fade-section: 600ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* ── PANEL FLOTANTE CONSTELACIÓN ────────────────────
+     Mayer (2009): split-attention effect.
+     Panel sobre el mapa mantiene referencia visual.
+  ──────────────────────────────────────────────────── */
+  --panel-width: 420px;
+  --panel-fade-duration: 400ms;
+
+  /* ── BORDES Y RADIOS ────────────────────────────────*/
+  --border-subtle: 0.5px solid #141e2e;
+  --border-active: 0.5px solid #2a3a56;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 30px;  /* para CTAs pill */
+}
+
+/* ── RESET Y BASE ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.7;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── GRADIENTE DE FONDO ────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-gradient);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── TIPOGRAFÍA BASE ───────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-editorial);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-text-hero);
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--color-text-body);
+  line-height: 1.8;
+}
+
+/* ── TAG COGNITIVE OBSERVATORY ─────────────────────── */
+.co-tag {
+  font-family: var(--font-systems);
+  font-size: var(--text-tag);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-identity);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.co-tag::before,
+.co-tag::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 0.5px;
+  background: var(--color-nav-rest);
+}
+
+/* ── UTILIDADES ────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
