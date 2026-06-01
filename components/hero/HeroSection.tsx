@@ -1,5 +1,5 @@
 'use client';
-
+import MobileHero from '@/components/hero/MobileHero';
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HERO_CONTENT, HERO_SCENES } from '@/lib/content';
@@ -19,6 +19,8 @@ export default function HeroSection() {
   const [showHint, setShowHint]             = useState(false);
   const [hoverPrimary, setHoverPrimary]     = useState(false);
   const [hoverSecondary, setHoverSecondary] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted]   = useState(false);
   const nextActionRef                       = useRef<() => void>(() => {});
   const timeoutsRef                         = useRef<NodeJS.Timeout[]>([]);
 
@@ -58,8 +60,7 @@ const step4 = () => {
     };
 
     // FASE PRE-FINAL — destello amarillo único.
-    // Un evento, no un estado continuo — por eso tiene
-    // mayor impacto narrativo que un pulso repetido.
+    // Un evento, no un estado continuo — por eso tiene mayor impacto narrativo que un pulso repetido.
     // Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros.
     // Respuesta de orientación involuntaria — el sistema visual
     // lo detecta antes de que la conciencia intervenga.
@@ -125,7 +126,18 @@ const step4 = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // BYPASS — el clic adelanta la acción pendiente.
+
+  // Detecta mobile en tiempo real sin afectar desktop.
+  // Se actualiza si el usuario rota el dispositivo.
+  // Apple HIG (2023): contenido visible sin scroll en mobile.
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 430);
+    checkMobile();
+    setMounted(true);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+    // BYPASS — el clic adelanta la acción pendiente.
   // La siguiente fase sigue su ritmo natural hasta nuevo clic.
   // Nielsen (1994): respuesta inmediata al input del usuario
   // es fundamental para sensación de control y confianza.
@@ -176,7 +188,10 @@ const step4 = () => {
     transition: 'opacity 1.1s ease, transform 1.1s ease',
   });
 
+   if (!mounted) return null;
+   if (isMobile) return <MobileHero />;
   return (
+   
     <section style={{
       position: 'relative',
       width: '100vw',
@@ -240,19 +255,10 @@ const step4 = () => {
           <span style={{ display: 'block', width: '24px', height: '0.5px', background: '#2a3a56' }} />
        </div>
 
-{/* DESTELLO ESTELAR — pulso contemplativo asimétrico
-            La curva de animación es intencional:
-            aparición lenta (0-30%) · pico brevísimo (30%) ·
-            disolución muy lenta (30-100%).
-            Como una estrella que emerge del oscuro y se disuelve
-            de vuelta en él — nunca "llega" ni "se va",
-            simplemente "es" y luego "deja de ser".
-            Referencia: Tarkovsky (Stalker, 1979) — la luz
-            en la Zona no tiene fuente identificable,
-            emerge del ambiente mismo.
-            Centro: 3px sólido — casi un punto matemático.
-            Gradiente: 4 capas concéntricas que se disuelven
-            hacia el negro. La luz ES el gradiente,
+{/* DESTELLO ESTELAR — pulso contemplativo asimétrico: La curva de animación es intencional: aparición lenta (0-30%) · pico brevísimo (30%) ·  disolución muy lenta (30-100%).
+            Como una estrella que emerge del oscuro y se disuelve de vuelta en él — nunca "llega" ni "se va", simplemente "es" y luego "deja de ser".
+            Referencia: Tarkovsky (Stalker, 1979) — la luz en la Zona no tiene fuente identificable, emerge del ambiente mismo.
+            Centro: 3px sólido — casi un punto matemático Gradiente: 4 capas concéntricas que se disuelven hacia el negro. La luz ES el gradiente,
             no el centro. */}
         <div style={{ height: '28px' }} />
         <AnimatePresence>
@@ -346,12 +352,8 @@ const step4 = () => {
       </div>
 
         
-      {/* HINT DE BYPASS — desaparece después de 3s
-          Aparece con la primera frase cuando el usuario
-          ya está orientado y listo para recibir instrucción.
-          Desaparece antes de que se vuelva ruido visual.
-          Csikszentmihalyi (1990): el exceso de instrucción
-          destruye la sensación de flujo y descubrimiento. */}
+      {/* HINT DE BYPASS — desaparece después de 3s Aparece con la primera frase cuando el usuario  ya está orientado y listo para recibir instrucción.
+          Desaparece antes de que se vuelva ruido visual. Csikszentmihalyi (1990): el exceso de instrucción  destruye la sensación de flujo y descubrimiento. */}
       <AnimatePresence>
         {showHint && (
           <motion.p
