@@ -131,7 +131,7 @@ const step4 = () => {
   // Se actualiza si el usuario rota el dispositivo.
   // Apple HIG (2023): contenido visible sin scroll en mobile.
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 430);
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
     setMounted(true);
     window.addEventListener('resize', checkMobile);
