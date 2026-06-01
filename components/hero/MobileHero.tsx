@@ -96,7 +96,7 @@ export default function MobileHero() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '0 24px',
+        padding: '0 20px',
         boxSizing: 'border-box',
         gap: '12px',
       }}>
@@ -114,6 +114,7 @@ export default function MobileHero() {
             color: '#c4bdb0',
             lineHeight: 1.1,
             margin: 0,
+            width:'100%',
           }}>
             {HERO_CONTENT.manifesto}
           </h2>
