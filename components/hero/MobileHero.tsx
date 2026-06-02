@@ -202,7 +202,7 @@ export default function MobileHero() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'left',
           padding: '0 20px',
           boxSizing: 'border-box',
           gap: '12px',
