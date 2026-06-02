@@ -12,12 +12,12 @@ import { HERO_CONTENT, HERO_SCENES } from '@/lib/content';
 type MobilePhase = 'waiting' | 'scene-3' | 'scene-4' | 'scene-5' | 'final';
 
 export default function MobileHero() {
-  const [phase, setPhase]           = useState<MobilePhase>('waiting');
-  const [block, setBlock]           = useState(0);
-  const [showHero, setShowHero]     = useState(false);
+  const [phase, setPhase]             = useState<MobilePhase>('waiting');
+  const [block, setBlock]             = useState(0);
+  const [showHero, setShowHero]       = useState(false);
   const [showButtons, setShowButtons] = useState(false);
-  const nextActionRef               = useRef<() => void>(() => {});
-  const timeoutsRef                 = useRef<NodeJS.Timeout[]>([]);
+  const nextActionRef                 = useRef<() => void>(() => {});
+  const timeoutsRef                   = useRef<NodeJS.Timeout[]>([]);
 
   const add = (fn: () => void, ms: number) => {
     const t = setTimeout(fn, ms);
@@ -32,8 +32,8 @@ export default function MobileHero() {
 
   useEffect(() => {
 
-// FASE FINAL — statement aparece bloque por bloque.
-    // Mismos tiempos que desktop — aprobados con evidencia.
+    // FASE FINAL — statement aparece bloque por bloque.
+    // Mismos tiempos que desktop — aprobados con evidencia científica.
     // Berger & Bhagavan (1984): ciclos de 2-4s sincronizan
     // con ritmo respiratorio humano — sensación de vida.
     const step4 = () => {
@@ -91,7 +91,9 @@ export default function MobileHero() {
   }, []);
 
   // BYPASS — clic adelanta la frase pendiente.
-  // Nielsen (1994): respuesta inmediata al input del usuario.
+  // La siguiente sigue su ritmo natural hasta nuevo clic.
+  // Nielsen (1994): respuesta inmediata al input del usuario
+  // es fundamental para sensación de control y confianza.
   useEffect(() => {
     const handleClick = () => {
       if (nextActionRef.current) {
@@ -109,6 +111,8 @@ export default function MobileHero() {
     (phase === 'scene-5' && s.id === 5)
   );
 
+  // Fade-in suave con movimiento vertical mínimo.
+  // Los bloques emergen desde abajo — emergencia semántica.
   const blockStyle = (visible: boolean) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? 'translateY(0)' : 'translateY(10px)',
@@ -128,7 +132,9 @@ export default function MobileHero() {
       position: 'relative',
     }}>
 
-      {/* SEO */}
+      {/* TEXTO SEMÁNTICO PARA SEO
+          HTML puro — Next.js SSR lo indexa desde el servidor.
+          Google Search Central (2023): bots no leen WebGL. */}
       <h1 style={{
         position: 'absolute', width: 1, height: 1,
         overflow: 'hidden', opacity: 0,
@@ -138,9 +144,10 @@ export default function MobileHero() {
 
       {/* TAG — ancla de identidad desde frame 0.
           LeDoux (1996): sin ancla visual, la amígdala activa
-          alerta de ambigüedad en 80-100ms. */}
+          alerta de ambigüedad en 80-100ms.
+          SIEMPRE estático — nunca anima. */}
       <div style={{
-        paddingTop: '40px',
+        paddingTop: '36px',
         display: 'flex',
         justifyContent: 'center',
         flexShrink: 0,
@@ -160,10 +167,12 @@ export default function MobileHero() {
           <span style={{ width: '20px', height: '0.5px', background: '#2a3a56', display: 'block' }} />
         </div>
       </div>
+
       {/* DESTELLO ESTELAR — evento único pre-final.
           Aparece debajo del tag cuando termina la tercera frase.
           Tarkovsky (Stalker, 1979): luz puntual que sugiere
           sin explicar — referencia cinematográfica oficial.
+          Glow radial ampliado — proporción 1:20 núcleo/corona.
           Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros. */}
       {phase === 'final' && (
         <motion.div
@@ -188,7 +197,6 @@ export default function MobileHero() {
             backgroundColor: '#C8A84B',
             zIndex: 25,
             pointerEvents: 'none',
-            // GLow Radial. Zeki (1193). 
             boxShadow: [
               '0 0 4px 2px rgba(200,168,75,1)',
               '0 0 16px 8px rgba(200,168,75,0.5)',
@@ -201,9 +209,10 @@ export default function MobileHero() {
       )}
 
       {/* MICROCOPY — escenas 03, 04, 05
-          Posiciones: inferior izquierda → centro → superior derecha.
-          Yarbus (1967): tierra → horizonte → cielo.
-          Clic adelanta la frase pendiente. */}
+          Tres posiciones: tierra → horizonte → cielo.
+          Yarbus (1967): cambio de zona sacádica activa
+          sensación de nueva escena cognitiva.
+          Clic adelanta la frase pendiente — bypass de cortesía. */}
       <AnimatePresence mode="wait">
         {activeScene && activeScene.microcopy && (
           <motion.p
@@ -244,86 +253,93 @@ export default function MobileHero() {
         )}
       </AnimatePresence>
 
-      {/* HERO STATEMENT — flujo vertical editorial.
+      {/* HERO STATEMENT — siempre en el DOM, solo invisible.
+          opacity controlada por showHero evita el salto de layout
+          que ocurría cuando el contenedor aparecía de golpe
+          y redistribuía el espacio flex.
           flex: 1 ocupa el espacio disponible entre tag y botones.
-          justify-content: center centra verticalmente.
-          text-align: left garantiza alineación izquierda.
-          Esta arquitectura elimina el scroll y el overflow. */}
-      {showHero && (
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          paddingTop: '60px',
-          padding: '0 20px',
-          boxSizing: 'border-box',
-          gap: '12px',
-          textAlign: 'left',
-        }}>
+          Berger & Bhagavan (1984): la transición suave de opacidad
+          preserva la continuidad del Living Breath System. */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: '0 20px',
+        paddingTop: '60px',
+        boxSizing: 'border-box',
+        gap: '12px',
+        textAlign: 'left',
+        opacity: showHero ? 1 : 0,
+        transition: 'opacity 0.8s ease',
+      }}>
 
-          {/* Bloque 1 — Manifiesto principal.
-              28px aprobado. Rayner (1998): mantiene jerarquía
-              visual en alta densidad (395ppi G60).
-              Paivio (1986): tres anclas semánticas concretas. */}
-          <div style={blockStyle(block >= 1)}>
-            <h2 style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: '28px',
-              fontStyle: 'italic',
-              color: '#c4bdb0',
-              lineHeight: 1.1,
-              margin: 0,
-              width: '100%',
-            }}>
-              {HERO_CONTENT.manifesto}
-            </h2>
-          </div>
-
-          {/* Bloque 2 — Segunda línea.
-              Gestalt: variación de color comunica jerarquía
-              sin ruptura tipográfica. */}
-          <div style={blockStyle(block >= 2)}>
-            <p style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: '18px',
-              fontStyle: 'italic',
-              color: '#8b9eb3',
-              lineHeight: 1.3,
-              margin: 0,
-            }}>
-              {HERO_CONTENT.secondLine}
-            </p>
-          </div>
-
-          {/* Bloque 3 — Coda EN.
-              Kroll & Bialystok (2013): L2 activa modo de
-              categorización y evaluación global. */}
-          <div style={blockStyle(block >= 3)}>
-            <p style={{
-              fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: '13px',
-              letterSpacing: '0.04em',
-              color: '#6a8aaa',
-              lineHeight: 1.6,
-              marginBottom: '24px',
-            }}>
-              {HERO_CONTENT.coda}
-            </p>
-          </div>
-
+        {/* Bloque 1 — Manifiesto principal.
+            28px aprobado. Rayner (1998): mantiene jerarquía
+            visual en alta densidad (395ppi G60).
+            Paivio (1986): tres anclas semánticas concretas. */}
+        <div style={blockStyle(block >= 1)}>
+          <h2 style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: '28px',
+            fontStyle: 'italic',
+            color: '#c4bdb0',
+            lineHeight: 1.1,
+            margin: 0,
+            width: '100%',
+          }}>
+            {HERO_CONTENT.manifesto}
+          </h2>
         </div>
-      )}
+
+        {/* Bloque 2 — Segunda línea.
+            Gestalt: variación de color comunica jerarquía
+            sin ruptura tipográfica. */}
+        <div style={blockStyle(block >= 2)}>
+          <p style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: '18px',
+            fontStyle: 'italic',
+            color: '#8b9eb3',
+            lineHeight: 1.3,
+            margin: 0,
+          }}>
+            {HERO_CONTENT.secondLine}
+          </p>
+        </div>
+
+        {/* Bloque 3 — Coda EN.
+            Kroll & Bialystok (2013): L2 activa corteza prefrontal
+            dorsolateral — modo de categorización y evaluación global. */}
+        <div style={blockStyle(block >= 3)}>
+          <p style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontSize: '13px',
+            letterSpacing: '0.04em',
+            color: '#6a8aaa',
+            lineHeight: 1.6,
+            margin: 0,
+            marginBottom: '24px',
+          }}>
+            {HERO_CONTENT.coda}
+          </p>
+        </div>
+
+      </div>
 
       {/* BOTONES — parte del flujo vertical.
           flexShrink: 0 garantiza que no se compriman.
-          Cialdini (2001): CTA como puerta abierta. */}
+          Fade-in sin movimiento vertical — elimina el salto
+          que causaba y:6 → y:0 en versiones anteriores.
+          Delay 0.4s da respiración entre coda y botones.
+          Cialdini (2001): CTA como puerta abierta —
+          visible cuando el usuario ya tiene contexto. */}
       <AnimatePresence>
         {showButtons && (
           <motion.div
-initial={{ opacity: 0}}
-            animate={{ opacity: 1}}
-            transition={{ duration: 1.8, ease: 'easeOut', delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.8, ease: 'easeInOut', delay: 0.4 }}
             style={{
               flexShrink: 0,
               display: 'flex',
@@ -380,10 +396,12 @@ initial={{ opacity: 0}}
         )}
       </AnimatePresence>
 
-{/* INDICADORES — constelación en miniatura.
+      {/* INDICADORES — constelación en miniatura.
           Centro inferior — visibles sin scroll.
           Gestalt (Wertheimer, 1923): puntos conectados
-          se perciben como sistema, no como lista. */}
+          se perciben como sistema, no como lista.
+          Posner (1980): elemento que activa zona inferior
+          sin saturarla. */}
       <div style={{
         position: 'absolute',
         bottom: '12px',
@@ -414,6 +432,7 @@ initial={{ opacity: 0}}
           </div>
         ))}
       </div>
+
     </div>
   );
 }
