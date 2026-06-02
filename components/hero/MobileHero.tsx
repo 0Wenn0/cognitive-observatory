@@ -5,16 +5,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { HERO_CONTENT, HERO_SCENES } from '@/lib/content';
 
 // MOBILE HERO — experiencia contemplativa con las 3 frases filosóficas.
-// Misma secuencia narrativa que desktop — tierra → horizonte → cielo.
+// Arquitectura de cadencia idéntica a desktop — aprobada con evidencia.
 // Yarbus (1967): posiciones espaciales distintas = nueva escena cognitiva.
 // Apple HIG (2023): contenido visible sin scroll en primera pantalla.
 
-type MobilePhase = 'waiting' | 'scene-3' | 'scene-4' | 'scene-5' | 'final';
+type MobilePhase = 'waiting' | 'scene-3' | 'scene-4' | 'scene-5' | 'pre-final' | 'final';
 
 export default function MobileHero() {
   const [phase, setPhase]             = useState<MobilePhase>('waiting');
   const [block, setBlock]             = useState(0);
   const [showHero, setShowHero]       = useState(false);
+  const [showFlash, setShowFlash]     = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const nextActionRef                 = useRef<() => void>(() => {});
   const timeoutsRef                   = useRef<NodeJS.Timeout[]>([]);
@@ -32,29 +33,42 @@ export default function MobileHero() {
 
   useEffect(() => {
 
-    // FASE FINAL — statement aparece bloque por bloque.
-    // Mismos tiempos que desktop — aprobados con evidencia científica.
-    // Berger & Bhagavan (1984): ciclos de 2-4s sincronizan
+    // FASE FINAL — idéntica a desktop.
+    // setShowFlash(false) → espera 400ms → setShowHero(true).
+    // Cutting et al. (2012): el destello debe terminar antes
+    // de que emerja el statement — overlap crea confusión visual.
+    // Berger & Bhagavan (1984): ciclos de 3-5s sincronizan
     // con ritmo respiratorio humano — sensación de vida.
     const step4 = () => {
-      setPhase('final');
-      setShowHero(true);
-      // Bloque 1 a 400ms — aparece cuando el destello
-      // todavía existe en su disolución.
-      // Cutting et al. (2012): overlap crea continuidad
-      // narrativa — el cerebro percibe un solo momento fluido.
-      setTimeout(() => setBlock(1), 400);
-      // Bloque 2 a 2200ms — tiempo de lectura del manifiesto.
-      // Rayner et al. (2016): 180-200 palabras/min texto filosófico.
-      setTimeout(() => setBlock(2), 2200);
-      // Bloque 3 a 4000ms — tiempo de lectura de segunda línea.
-      setTimeout(() => setBlock(3), 4000);
-      // Botones a 5800ms — después de que el usuario haya
-      // procesado los tres bloques de texto.
-      // Cialdini (2001): CTA aparece cuando el usuario ya
-      // tiene contexto suficiente para actuar.
-      setTimeout(() => setShowButtons(true), 5800);
+      setShowFlash(false);
+      setTimeout(() => {
+        setPhase('final');
+        setShowHero(true);
+        // Mismos tiempos que desktop — aprobados con evidencia.
+        // Rayner et al. (2016): 180-200 palabras/min texto filosófico.
+        setTimeout(() => setBlock(1), 400);
+        setTimeout(() => setBlock(2), 2200);
+        setTimeout(() => setBlock(3), 4000);
+        // Botones a 5800ms — Cialdini (2001): CTA aparece cuando
+        // el usuario ya tiene contexto suficiente para actuar.
+        setTimeout(() => setShowButtons(true), 5800);
+      }, 400);
       nextActionRef.current = () => {};
+    };
+
+    // FASE PRE-FINAL — destello amarillo único.
+    // Idéntico al desktop — showFlash activa el destello,
+    // step4 lo apaga después de 2200ms.
+    // Tarkovsky (Stalker, 1979): luz puntual que sugiere
+    // sin explicar — referencia cinematográfica oficial.
+    // Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros.
+    const stepPreFinal = () => {
+      setPhase('pre-final');
+      setShowFlash(true);
+      // 2200ms = duración del destello antes de que emerja
+      // el statement — mismo valor que desktop aprobado.
+      add(step4, 2200);
+      nextActionRef.current = step4;
     };
 
     // FASES DE MICROCOPY — mismos tiempos que desktop.
@@ -63,8 +77,8 @@ export default function MobileHero() {
     // + procesamiento emocional de texto filosófico de 15 palabras.
     const step3 = () => {
       setPhase('scene-5');
-      nextActionRef.current = step4;
-      add(step4, 3800);
+      nextActionRef.current = stepPreFinal;
+      add(stepPreFinal, 3800);
     };
 
     const step2 = () => {
@@ -90,7 +104,7 @@ export default function MobileHero() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // BYPASS — clic adelanta la frase pendiente.
+  // BYPASS — clic adelanta la acción pendiente.
   // La siguiente sigue su ritmo natural hasta nuevo clic.
   // Nielsen (1994): respuesta inmediata al input del usuario
   // es fundamental para sensación de control y confianza.
@@ -113,6 +127,7 @@ export default function MobileHero() {
 
   // Fade-in suave con movimiento vertical mínimo.
   // Los bloques emergen desde abajo — emergencia semántica.
+  // Coherente con "Semantic Drift" del Documento Maestro.
   const blockStyle = (visible: boolean) => ({
     opacity: visible ? 1 : 0,
     transform: visible ? 'translateY(0)' : 'translateY(10px)',
@@ -169,44 +184,53 @@ export default function MobileHero() {
       </div>
 
       {/* DESTELLO ESTELAR — evento único pre-final.
-          Aparece debajo del tag cuando termina la tercera frase.
+          Arquitectura idéntica a desktop: showFlash controlado
+          por stepPreFinal — aparece ANTES del statement.
           Tarkovsky (Stalker, 1979): luz puntual que sugiere
           sin explicar — referencia cinematográfica oficial.
           Glow radial ampliado — proporción 1:20 núcleo/corona.
+          times: [0, 0.04, 0.50, 1] — aparición casi inmediata,
+          disolución lenta y contemplativa.
           Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros. */}
-      {phase === 'final' && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.2 }}
-          animate={{
-            opacity: [0, 0, 1, 0],
-            scale: [0.2, 0.6, 1, 0.4],
-          }}
-          transition={{
-            duration: 2.0,
-            ease: 'easeInOut',
-            times: [0, 0.04, 0.80, 1],
-          }}
-          style={{
-            position: 'absolute',
-            top: '68px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '2px',
-            height: '2px',
-            borderRadius: '50%',
-            backgroundColor: '#C8A84B',
-            zIndex: 25,
-            pointerEvents: 'none',
-            boxShadow: [
-              '0 0 4px 2px rgba(200,168,75,1)',
-              '0 0 16px 8px rgba(200,168,75,0.5)',
-              '0 0 40px 20px rgba(200,168,75,0.2)',
-              '0 0 80px 40px rgba(200,168,75,0.08)',
-              '0 0 120px 60px rgba(200,168,75,0.03)',
-            ].join(', '),
-          }}
-        />
-      )}
+      <div style={{
+        position: 'absolute',
+        top: '68px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 25,
+        pointerEvents: 'none',
+      }}>
+        <AnimatePresence>
+          {showFlash && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.2 }}
+              animate={{
+                opacity: [0, 0, 1, 0],
+                scale: [0.2, 0.6, 1, 0.4],
+              }}
+              transition={{
+                duration: 1.6,
+                ease: 'easeInOut',
+                times: [0, 0.04, 0.50, 1],
+              }}
+              exit={{ opacity: 0 }}
+              style={{
+                width: '1.5px',
+                height: '1.5px',
+                borderRadius: '50%',
+                backgroundColor: '#C8A84B',
+                boxShadow: [
+                  '0 0 4px 2px rgba(200,168,75,1)',
+                  '0 0 16px 8px rgba(200,168,75,0.5)',
+                  '0 0 40px 20px rgba(200,168,75,0.2)',
+                  '0 0 80px 40px rgba(200,168,75,0.08)',
+                  '0 0 120px 60px rgba(200,168,75,0.03)',
+                ].join(', '),
+              }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* MICROCOPY — escenas 03, 04, 05
           Tres posiciones: tierra → horizonte → cielo.
@@ -255,10 +279,9 @@ export default function MobileHero() {
 
       {/* HERO STATEMENT — siempre en el DOM, solo invisible.
           opacity controlada por showHero evita el salto de layout
-          que ocurría cuando el contenedor aparecía de golpe
-          y redistribuía el espacio flex.
+          que ocurría cuando el contenedor aparecía de golpe.
           flex: 1 ocupa el espacio disponible entre tag y botones.
-          Berger & Bhagavan (1984): la transición suave de opacidad
+          Berger & Bhagavan (1984): transición suave de opacidad
           preserva la continuidad del Living Breath System. */}
       <div style={{
         flex: 1,
@@ -277,7 +300,8 @@ export default function MobileHero() {
         {/* Bloque 1 — Manifiesto principal.
             28px aprobado. Rayner (1998): mantiene jerarquía
             visual en alta densidad (395ppi G60).
-            Paivio (1986): tres anclas semánticas concretas. */}
+            Paivio (1986): tres anclas semánticas concretas
+            generan mayor retención que dos elementos. */}
         <div style={blockStyle(block >= 1)}>
           <h2 style={{
             fontFamily: "'DM Serif Display', serif",
@@ -310,7 +334,8 @@ export default function MobileHero() {
 
         {/* Bloque 3 — Coda EN.
             Kroll & Bialystok (2013): L2 activa corteza prefrontal
-            dorsolateral — modo de categorización y evaluación global. */}
+            dorsolateral — modo de categorización y evaluación global.
+            marginBottom da respiración antes de los botones. */}
         <div style={blockStyle(block >= 3)}>
           <p style={{
             fontFamily: "'IBM Plex Sans', sans-serif",
@@ -333,7 +358,7 @@ export default function MobileHero() {
           que causaba y:6 → y:0 en versiones anteriores.
           Delay 0.4s da respiración entre coda y botones.
           Cialdini (2001): CTA como puerta abierta —
-          visible cuando el usuario ya tiene contexto. */}
+          visible cuando el usuario ya tiene contexto suficiente. */}
       <AnimatePresence>
         {showButtons && (
           <motion.div
@@ -400,8 +425,8 @@ export default function MobileHero() {
           Centro inferior — visibles sin scroll.
           Gestalt (Wertheimer, 1923): puntos conectados
           se perciben como sistema, no como lista.
-          Posner (1980): elemento que activa zona inferior
-          sin saturarla. */}
+          Posner (1980): elemento sutil que activa zona
+          inferior sin saturarla. */}
       <div style={{
         position: 'absolute',
         bottom: '12px',
