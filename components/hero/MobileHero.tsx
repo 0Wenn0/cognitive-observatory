@@ -326,7 +326,40 @@ export default function MobileHero() {
           </motion.div>
         )}
       </AnimatePresence>
-
+{/* INDICADORES — constelación en miniatura.
+          Centro inferior — visibles sin scroll.
+          Gestalt (Wertheimer, 1923): puntos conectados
+          se perciben como sistema, no como lista. */}
+      <div style={{
+        position: 'absolute',
+        bottom: '12px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        alignItems: 'center',
+        zIndex: 20,
+      }}>
+        {[1, 2, 3, 4].map((step, index) => (
+          <div key={step} style={{ display: 'flex', alignItems: 'center' }}>
+            {index > 0 && (
+              index === 1 ? (
+                <span style={{
+                  fontSize: '9px', color: '#2a3a56',
+                  margin: '0 4px',
+                  fontFamily: "'IBM Plex Sans', sans-serif",
+                }}>→</span>
+              ) : (
+                <div style={{ width: '12px', height: '0.5px', backgroundColor: '#2a3a56' }} />
+              )
+            )}
+            <div style={{
+              width: '5px', height: '5px',
+              borderRadius: '50%',
+              backgroundColor: '#2a3a56',
+            }} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
