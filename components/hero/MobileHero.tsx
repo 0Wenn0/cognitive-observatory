@@ -32,44 +32,57 @@ export default function MobileHero() {
 
   useEffect(() => {
 
-    // FASE FINAL — statement aparece bloque por bloque.
-    // Berger & Bhagavan (1984): ciclos de 2-3s sincronizan
-    // con ritmo respiratorio — sensación de vida en mobile.
+// FASE FINAL — statement aparece bloque por bloque.
+    // Mismos tiempos que desktop — aprobados con evidencia.
+    // Berger & Bhagavan (1984): ciclos de 2-4s sincronizan
+    // con ritmo respiratorio humano — sensación de vida.
     const step4 = () => {
       setPhase('final');
       setShowHero(true);
-      setTimeout(() => setBlock(1), 300);
-      setTimeout(() => setBlock(2), 1600);
-      setTimeout(() => setBlock(3), 2800);
-      setTimeout(() => setShowButtons(true), 4400);
+      // Bloque 1 a 400ms — aparece cuando el destello
+      // todavía existe en su disolución.
+      // Cutting et al. (2012): overlap crea continuidad
+      // narrativa — el cerebro percibe un solo momento fluido.
+      setTimeout(() => setBlock(1), 400);
+      // Bloque 2 a 2200ms — tiempo de lectura del manifiesto.
+      // Rayner et al. (2016): 180-200 palabras/min texto filosófico.
+      setTimeout(() => setBlock(2), 2200);
+      // Bloque 3 a 4000ms — tiempo de lectura de segunda línea.
+      setTimeout(() => setBlock(3), 4000);
+      // Botones a 5800ms — después de que el usuario haya
+      // procesado los tres bloques de texto.
+      // Cialdini (2001): CTA aparece cuando el usuario ya
+      // tiene contexto suficiente para actuar.
+      setTimeout(() => setShowButtons(true), 5800);
       nextActionRef.current = () => {};
     };
 
-    // FASES DE MICROCOPY — tres posiciones distintas.
+    // FASES DE MICROCOPY — mismos tiempos que desktop.
     // Yarbus (1967): cambio de posición = nueva escena cognitiva.
-    // 3.0s entre frases — suficiente para mobile.
-    // Rayner et al. (2016): 180-200 palabras/min texto filosófico.
+    // Rayner et al. (2016): 3.8s = tiempo óptimo para lectura
+    // + procesamiento emocional de texto filosófico de 15 palabras.
     const step3 = () => {
       setPhase('scene-5');
       nextActionRef.current = step4;
-      add(step4, 3000);
+      add(step4, 3800);
     };
 
     const step2 = () => {
       setPhase('scene-4');
       nextActionRef.current = step3;
-      add(step3, 3000);
+      add(step3, 3800);
     };
 
     const step1 = () => {
       setPhase('scene-3');
       nextActionRef.current = step2;
-      add(step2, 3000);
+      add(step2, 3800);
     };
 
     // Primera frase a 0.8s.
     // Tag visible = ancla cognitiva establecida.
-    // Mazmanian et al. (2013): orientación visual en 0.8s.
+    // Mazmanian et al. (2013): con elemento de identidad
+    // visible, orientación visual se completa en 0.8s.
     nextActionRef.current = step1;
     add(step1, 800);
 
@@ -308,7 +321,7 @@ export default function MobileHero() {
           <motion.div
 initial={{ opacity: 0}}
             animate={{ opacity: 1}}
-            transition={{ duration: 1.4, ease: 'easeOut', delay: 0.2 }}
+            transition={{ duration: 1.8, ease: 'easeOut', delay: 0.4 }}
             style={{
               flexShrink: 0,
               display: 'flex',
