@@ -352,74 +352,68 @@ export default function MobileHero() {
 
       </div>
 
-      {/* BOTONES — parte del flujo vertical.
-          flexShrink: 0 garantiza que no se compriman.
-          Fade-in sin movimiento vertical — elimina el salto
-          que causaba y:6 → y:0 en versiones anteriores.
-          Delay 0.4s da respiración entre coda y botones.
+{/* BOTONES — siempre en el DOM, solo invisibles.
+          opacity controlada por showButtons evita el salto
+          de layout que ocurría cuando el div aparecía de golpe
+          y empujaba el contenedor flex hacia arriba.
+          Berger & Bhagavan (1984): transición suave de opacidad
+          preserva la continuidad del Living Breath System.
           Cialdini (2001): CTA como puerta abierta —
           visible cuando el usuario ya tiene contexto suficiente. */}
-      <AnimatePresence>
-        {showButtons && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.8, ease: 'easeInOut', delay: 0.4 }}
-            style={{
-              flexShrink: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '12px',
-              padding: '0 20px',
-              paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)',
-              boxSizing: 'border-box',
-            }}
-          >
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                document.getElementById('constellation')
-                  ?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: '11px',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: '#8b9eb3',
-                border: '0.5px solid #6a8aaa',
-                padding: '14px 24px',
-                borderRadius: '30px',
-                background: 'transparent',
-                cursor: 'pointer',
-                width: '100%',
-              }}
-            >
-              {HERO_CONTENT.ctaPrimary}
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                document.getElementById('constellation')
-                  ?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              style={{
-                fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: '11px',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: '#6a8aaa',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              {HERO_CONTENT.ctaSecondary}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div style={{
+        flexShrink: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '0 20px',
+        paddingBottom: 'calc(env(safe-area-inset-bottom) + 40px)',
+        boxSizing: 'border-box',
+        opacity: showButtons ? 1 : 0,
+        transition: 'opacity 1.8s ease',
+      }}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            document.getElementById('constellation')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontSize: '11px',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: '#8b9eb3',
+            border: '0.5px solid #6a8aaa',
+            padding: '14px 24px',
+            borderRadius: '30px',
+            background: 'transparent',
+            cursor: 'pointer',
+            width: '100%',
+          }}
+        >
+          {HERO_CONTENT.ctaPrimary}
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            document.getElementById('constellation')
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{
+            fontFamily: "'IBM Plex Sans', sans-serif",
+            fontSize: '11px',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: '#6a8aaa',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          {HERO_CONTENT.ctaSecondary}
+        </button>
+      </div>
 
       {/* INDICADORES — constelación en miniatura.
           Centro inferior — visibles sin scroll.
