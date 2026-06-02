@@ -254,7 +254,7 @@ export default function MobileHero() {
               letterSpacing: '0.04em',
               color: '#6a8aaa',
               lineHeight: 1.6,
-              margin: 0,
+              marginBottom: '24px',
             }}>
               {HERO_CONTENT.coda}
             </p>
@@ -269,9 +269,9 @@ export default function MobileHero() {
       <AnimatePresence>
         {showButtons && (
           <motion.div
-initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: 'easeOut' }}
+initial={{ opacity: 0}}
+            animate={{ opacity: 1}}
+            transition={{ duration: 1.4, ease: 'easeOut' }}
             style={{
               flexShrink: 0,
               display: 'flex',
