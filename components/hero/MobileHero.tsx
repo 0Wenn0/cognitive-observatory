@@ -41,7 +41,7 @@ export default function MobileHero() {
       setTimeout(() => setBlock(1), 300);
       setTimeout(() => setBlock(2), 1600);
       setTimeout(() => setBlock(3), 2800);
-      setTimeout(() => setShowButtons(true), 3800);
+      setTimeout(() => setShowButtons(true), 4400);
       nextActionRef.current = () => {};
     };
 
@@ -127,7 +127,7 @@ export default function MobileHero() {
           LeDoux (1996): sin ancla visual, la amígdala activa
           alerta de ambigüedad en 80-100ms. */}
       <div style={{
-        paddingTop: '36px',
+        paddingTop: '20px',
         display: 'flex',
         justifyContent: 'center',
         flexShrink: 0,
@@ -268,9 +268,9 @@ export default function MobileHero() {
       <AnimatePresence>
         {showButtons && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9 }}
+initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: 'easeOut' }}
             style={{
               flexShrink: 0,
               display: 'flex',
