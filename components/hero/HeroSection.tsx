@@ -1,5 +1,6 @@
 'use client';
 import MobileHero from '@/components/hero/MobileHero';
+import ParticleSystem from '@/components/constellation/ParticleSystem';
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HERO_CONTENT, HERO_SCENES } from '@/lib/content';
@@ -220,10 +221,26 @@ const step4 = () => {
           Adelson (2000): gradiente de profundidad crea espacio
           tridimensional habitable — sensación de estar dentro. */}
       <div style={{
-        position: 'absolute', inset: 0, zIndex: 10,
+        position: 'absolute', inset: 0, zIndex: 5,
         background: 'radial-gradient(ellipse at 38% 52%, #0d1624 0%, #080b12 68%)',
       }} aria-hidden="true" />
+    <ParticleSystem />
 
+      {/* INK DIFFUSION ATMOSPHERE — 70% atmosférico via CSS
+          Gradientes radiales asimétricos que crean profundidad
+          y calidez sin competir con el texto.
+          Viven debajo del texto (zIndex 6) pero sobre el Canvas (zIndex 5). */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 6,
+        pointerEvents: 'none',
+        background: `
+          radial-gradient(ellipse 55% 45% at 78% 38%, rgba(20, 35, 65, 0.65) 0%, transparent 70%),
+          radial-gradient(ellipse 35% 55% at 88% 72%, rgba(15, 25, 50, 0.45) 0%, transparent 60%),
+          radial-gradient(ellipse 45% 35% at 62% 18%, rgba(22, 38, 68, 0.35) 0%, transparent 65%)
+        `,
+      }} aria-hidden="true" />
 
       {/* TAG "COGNITIVE OBSERVATORY"
           Visible desde frame 0 — ancla de identidad permanente.
@@ -254,6 +271,70 @@ const step4 = () => {
           Cognitive Observatory
           <span style={{ display: 'block', width: '24px', height: '0.5px', background: '#2a3a56' }} />
        </div>
+
+{/* VIGNETTE ARQUITECTÓNICO — sensación de recinto
+          El usuario debe sentir "estoy dentro de algo",
+          no "estoy viendo un background".
+          Bordes oscuros que enmarcan el espacio central
+          como una cámara oscura o sala de archivo. */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 7,
+        pointerEvents: 'none',
+        background: `
+          radial-gradient(ellipse 85% 80% at 50% 50%, transparent 40%, rgba(4, 6, 12, 0.85) 100%)
+        `,
+      }} aria-hidden="true" />
+
+      {/* FILM GRAIN — textura cinematográfica microscópica
+          Imperfección controlada que añade materialidad y memoria.
+          CSS noise via SVG filter — sin imágenes externas.
+          La diferencia entre "digital limpio" y "lugar habitado". */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <filter id="grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.65"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+          <feBlend in="SourceGraphic" mode="overlay" />
+        </filter>
+      </svg>
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 8,
+        pointerEvents: 'none',
+        opacity: 0.035,
+        filter: 'url(#grain)',
+        background: '#8b9eb3',
+      }} aria-hidden="true" />
+
+      {/* BREATHING LIGHT — variación lumínica orgánica
+          Una zona de luz focal muy suave que "respira".
+          Como si el espacio estuviera pensando.
+          Usa animación CSS keyframes — sin JavaScript. */}
+      <style>{`
+        @keyframes breathe {
+          0%, 100% { opacity: 0.04; transform: scale(1); }
+          50%       { opacity: 0.09; transform: scale(1.08); }
+        }
+      `}</style>
+<div style={{
+        position: 'absolute',
+        top: '10%',
+        right: '15%',
+        width: '900px',
+        height: '900px',
+        borderRadius: '50%',
+        background: 'radial-gradient(ellipse, rgba(20, 38, 72, 0.35) 0%, transparent 65%)',
+        zIndex: 6,
+        pointerEvents: 'none',
+        animation: 'breathe 10s ease-in-out infinite',
+      }} aria-hidden="true" />
 
 {/* DESTELLO ESTELAR — pulso contemplativo asimétrico: La curva de animación es intencional: aparición lenta (0-30%) · pico brevísimo (30%) ·  disolución muy lenta (30-100%).
             Como una estrella que emerge del oscuro y se disuelve de vuelta en él — nunca "llega" ni "se va", simplemente "es" y luego "deja de ser".
