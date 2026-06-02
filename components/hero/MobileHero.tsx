@@ -188,11 +188,13 @@ export default function MobileHero() {
             backgroundColor: '#C8A84B',
             zIndex: 25,
             pointerEvents: 'none',
+            // GLow Radial. Zeki (1193). 
             boxShadow: [
-              '0 0 3px 1px rgba(200,168,75,1)',
-              '0 0 10px 5px rgba(200,168,75,0.35)',
-              '0 0 24px 12px rgba(200,168,75,0.12)',
-              '0 0 48px 24px rgba(200,168,75,0.04)',
+              '0 0 4px 2px rgba(200,168,75,1)',
+              '0 0 16px 8px rgba(200,168,75,0.5)',
+              '0 0 40px 20px rgba(200,168,75,0.2)',
+              '0 0 80px 40px rgba(200,168,75,0.08)',
+              '0 0 120px 60px rgba(200,168,75,0.03)',
             ].join(', '),
           }}
         />
