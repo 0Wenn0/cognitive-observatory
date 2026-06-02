@@ -308,7 +308,7 @@ export default function MobileHero() {
           <motion.div
 initial={{ opacity: 0}}
             animate={{ opacity: 1}}
-            transition={{ duration: 1.4, ease: 'easeOut' }}
+            transition={{ duration: 1.4, ease: 'easeOut', delay: 0.2 }}
             style={{
               flexShrink: 0,
               display: 'flex',
