@@ -127,10 +127,9 @@ export default function MobileHero() {
           LeDoux (1996): sin ancla visual, la amígdala activa
           alerta de ambigüedad en 80-100ms. */}
       <div style={{
-        paddingTop: '36px',
+        paddingTop: '40px',
         display: 'flex',
-        justifyContent: 'center',
-        flexShrink: 0,
+        justifyContent: 'flex-start',
       }}>
         <div style={{
           fontFamily: "'IBM Plex Sans', sans-serif",
