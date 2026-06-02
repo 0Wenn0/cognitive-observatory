@@ -147,6 +147,43 @@ export default function MobileHero() {
           <span style={{ width: '20px', height: '0.5px', background: '#2a3a56', display: 'block' }} />
         </div>
       </div>
+      {/* DESTELLO ESTELAR — evento único pre-final.
+          Aparece debajo del tag cuando termina la tercera frase.
+          Tarkovsky (Stalker, 1979): luz puntual que sugiere
+          sin explicar — referencia cinematográfica oficial.
+          Zeki (1993): #C8A84B detectado en <200ms en fondos oscuros. */}
+      {phase === 'final' && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.2 }}
+          animate={{
+            opacity: [0, 0, 1, 0],
+            scale: [0.2, 0.6, 1, 0.4],
+          }}
+          transition={{
+            duration: 2.0,
+            ease: 'easeInOut',
+            times: [0, 0.04, 0.80, 1],
+          }}
+          style={{
+            position: 'absolute',
+            top: '68px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '2px',
+            height: '2px',
+            borderRadius: '50%',
+            backgroundColor: '#C8A84B',
+            zIndex: 25,
+            pointerEvents: 'none',
+            boxShadow: [
+              '0 0 3px 1px rgba(200,168,75,1)',
+              '0 0 10px 5px rgba(200,168,75,0.35)',
+              '0 0 24px 12px rgba(200,168,75,0.12)',
+              '0 0 48px 24px rgba(200,168,75,0.04)',
+            ].join(', '),
+          }}
+        />
+      )}
 
       {/* MICROCOPY — escenas 03, 04, 05
           Posiciones: inferior izquierda → centro → superior derecha.
