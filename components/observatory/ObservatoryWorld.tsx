@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CONSTELLATION_NODES } from '@/lib/nodes';
 import styles from './ObservatoryWorld.module.css';
 
-const FIRST_NODES = ['systems-thinking', 'neuroscience', 'data-analysis'];
+const FIRST_NODES = ['systems-thinking', 'neuroscience', 'data-analysis', 'stem-equity'];
 
 export default function ObservatoryWorld() {
   const nodes = FIRST_NODES
@@ -23,7 +23,7 @@ export default function ObservatoryWorld() {
         <p className={styles.intro}>Algunas ideas solo revelan su forma cuando observamos cómo se relacionan.</p>
       </header>
 
-      <div className={styles.field} aria-label="Constelación interactiva de tres conceptos">
+      <div className={styles.field} aria-label={`Constelación interactiva de ${nodes.length} conceptos`}>
         <svg className={styles.connections} viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
           {nodes.filter((node) => node.id !== 'systems-thinking').map((node) => {
             const center = nodes.find((item) => item.id === 'systems-thinking');
@@ -78,6 +78,18 @@ export default function ObservatoryWorld() {
         <div className={styles.tags}>
           {selected.panel.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}
         </div>
+        {selected.panel.links && selected.panel.links.length > 0 && (
+          <ul className={styles.links} aria-label="Proyectos relacionados">
+            {selected.panel.links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  {link.label} <span aria-hidden="true">↗</span>
+                  <span className={styles.srOnly}> (se abre en otra pestaña)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </article>
 
       <footer className={styles.footer}>
