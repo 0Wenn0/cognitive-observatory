@@ -34,6 +34,7 @@ export interface ConstellationNode {
     };
     tags: string[];        // Inglés — tags de disciplina
     archiveId?: string;    // Conectado a Transformation Archive
+    links?: { label: string; href: string }[]; // Evidencia navegable (proyectos publicados)
   };
   // Posición relativa en nebulosa orgánica (0-1)
   // Distribución asimétrica — Berlyne (1960)
@@ -203,6 +204,11 @@ export const CONSTELLATION_NODES: ConstellationNode[] = [
         context: 'Perspectiva de género en educación tecnológica',
       },
       tags: ['Gender & Tech', 'Educational Access', 'Social Innovation', 'SDGs'],
+      archiveId: 'becalas',
+      links: [
+        { label: 'Ver el micrositio de mentoría BécALAS', href: 'https://becalas-observatory.vercel.app/' },
+        { label: 'Cómo lo diseñé (caso UX/UI)', href: 'https://becalas-observatory.vercel.app/caso' },
+      ],
     },
     position: { x: 0.15, y: 0.75 },
     connections: ['systems-thinking', 'latam-reach'],

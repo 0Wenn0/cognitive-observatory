@@ -127,6 +127,27 @@ export const ARCHIVES = [
     tags: ["Behavioral Science", "Data Analysis", "Instructional Design", "Communication"],
     cluster: "human",
   },
+  {
+    id: "becalas",
+    title: "Mentorías BécALAS · Observatorio de mentoría",
+    subtitle: "Micrositio accesible para acompañar a universitarias en su mentoría",
+    challenge: "Acompañar a un grupo de estudiantes universitarias en tres sesiones de mentoría, con toda la comunicación por WhatsApp y acceso casi siempre desde el celular: necesitaban saber en segundos cuándo nos vemos, qué hacer antes y dónde encontrar las herramientas.",
+    intervention: "Diseñé y desarrollé un micrositio con tres prioridades explícitas: accesibilidad WCAG 2.1 AA, comprensión inmediata y mi marca de fondo. Voz cercana y de juego, una Misión 0 para presentarse con IA y reflexionar sobre qué corregirle, y herramientas de metas SMART y bitácora que guardan datos solo en el navegador.",
+    impact: "0 violaciones de accesibilidad (axe-core, WCAG 2.1 AA). Resultados con el grupo: pendientes al cierre de noviembre de 2026.",
+    organizations: ["BécALAS", "Bécalos"],
+    metrics: {
+      accessibility: "WCAG 2.1 AA",
+      violations: "0",
+      status: "En curso",
+    },
+    tags: ["UX/UI", "Accessibility", "Gender & Tech", "AI Literacy"],
+    cluster: "collective",
+    links: {
+      site: "https://becalas-observatory.vercel.app/",
+      caseStudy: "https://becalas-observatory.vercel.app/caso",
+      repo: "https://github.com/0Wenn0/becalas-observatory",
+    },
+  },
 ] as const;
 
 // ── OBSERVATORY JOURNAL ──────────────────────────────
